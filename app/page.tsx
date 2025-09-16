@@ -616,16 +616,24 @@ export default function Home() {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 mb-12">
             {/* Brand Section */}
             <div className="lg:col-span-4">
-              <div className="flex items-center mb-6">
-                <img
-                  src="/ikonka.png"
-                  alt="CodeGrip Logo"
-                  className="w-12 h-12 mr-3"
-                />
-                <h3 className="text-2xl font-light">
-                  CODE<span style={{color: 'white', fontWeight: 'bold'}}>&lt;/&gt;</span>GRIP
-                </h3>
-              </div>
+                <div className="flex items-center mb-6">
+                  <img
+                    src="/ikonka.png"
+                    alt="CodeGrip Logo"
+                    className="w-12 h-12 mr-4"
+                  />
+                  <div className="flex items-baseline">
+                    <span className="text-3xl font-bold tracking-wide text-white">
+                      CODE
+                    </span>
+                    <span className="text-2xl font-mono font-bold mx-1 text-purple-400 bg-purple-400/10 px-2 py-0.5 rounded border border-purple-400/20">
+                      &lt;/&gt;
+                    </span>
+                    <span className="text-3xl font-bold tracking-wide text-white">
+                      GRIP
+                    </span>
+                  </div>
+                </div>
               <p className="text-gray-300 mb-6 leading-relaxed">
                 Specializujeme se na tvorbu moderních webových aplikací, e-shopů a digitálních řešení.
                 Pomáháme firmám růst prostřednictvím inovativních technologií.
