@@ -88,7 +88,7 @@ export default function Home() {
         badgeLabel="New"
         ctaButtons={[
           { text: "Začněte stavět", href: "#footer", primary: true },
-          { text: "Naše služby", href: "#services" }
+          { text: "Naše služby", href: "#services-heading" }
         ]}
         microDetails={["React & Next.js", "Moderní design", "Rychlý vývoj"]}
       />
