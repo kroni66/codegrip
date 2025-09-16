@@ -1,5 +1,7 @@
 import React from 'react';
 import { cn } from '@/lib/utils';
+import { motion, useInView } from 'framer-motion';
+import { GlowingEffect } from './ui/glowing-effect';
 
 interface CardContent {
   title: string;
@@ -12,21 +14,59 @@ const CardBody = ({
 }: {
   cardContent: CardContent;
   className?: string;
-}) => (
-  <div className={cn(
-    'text-start p-5 md:p-7 lg:p-8',
-    'transition-all duration-300 ease-out',
-    'group-hover:transform group-hover:translate-y-[-2px]',
-    className
-  )}>
-    <h3 className="text-xl md:text-2xl font-bold mb-3 text-zinc-100 leading-tight tracking-tight">
-      {cardContent.title}
-    </h3>
-    <p className="text-zinc-400 text-sm md:text-base leading-relaxed font-medium">
-      {cardContent.description}
-    </p>
-  </div>
-);
+}) => {
+  const scrollToFooter = () => {
+    const element = document.getElementById('footer');
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 50 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6, ease: "easeOut" }}
+      viewport={{ once: false, margin: "-100px" }}
+      className={cn(
+        'text-start p-5 md:p-7 lg:p-8',
+        'transition-all duration-300 ease-out',
+        'group-hover:transform group-hover:translate-y-[-2px]',
+        className
+      )}
+    >
+      <motion.h3
+        initial={{ opacity: 0, x: -30 }}
+        whileInView={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
+        viewport={{ once: false, margin: "-100px" }}
+        className="text-xl md:text-2xl font-bold mb-3 text-zinc-100 leading-tight tracking-tight"
+      >
+        {cardContent.title}
+      </motion.h3>
+      <motion.p
+        initial={{ opacity: 0, x: -30 }}
+        whileInView={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.6, delay: 0.4, ease: "easeOut" }}
+        viewport={{ once: false, margin: "-100px" }}
+        className="text-zinc-400 text-sm md:text-base leading-relaxed font-medium mb-6"
+      >
+        {cardContent.description}
+      </motion.p>
+      <motion.button
+        initial={{ opacity: 0, scale: 0.8 }}
+        whileInView={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.6, delay: 0.6, ease: "easeOut" }}
+        viewport={{ once: false, margin: "-100px" }}
+        onClick={scrollToFooter}
+        className="relative text-white hover:text-zinc-300 font-medium transition-colors duration-200 group"
+      >
+        Objednat službu
+        <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-white group-hover:w-full transition-all duration-300 ease-out"></span>
+      </motion.button>
+    </motion.div>
+  );
+};
 
 export { CardBody };
 
@@ -94,32 +134,52 @@ export const SimpleCard_V2 = ({ cardContent }: { cardContent: CardContent }) => 
 
 export const CardWithLines = ({
   children,
-  className = ""
+  className = "",
+  index = 0
 }: {
   children: React.ReactNode;
   className?: string;
+  index?: number;
 }) => {
   return (
-    <div
+    <motion.div
+      initial={{ opacity: 0, y: 80 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.8, delay: index * 0.2, ease: "easeOut" }}
+      viewport={{ once: false, margin: "-50px" }}
       className={cn(
         "group relative w-full rounded-xl overflow-hidden",
-        "bg-zinc-950/50 backdrop-blur-sm",
-        "p-1 transition-all duration-300 ease-out",
-        "hover:bg-zinc-950/70 hover:shadow-lg",
-        "hover:shadow-zinc-900/20 hover:scale-[1.02]",
-        "focus-within:ring-2 focus-within:ring-zinc-600/50 focus-within:ring-offset-2",
-        "focus-within:ring-offset-zinc-950",
         className
       )}
     >
-      <div className="size-full bg-[url(/svg/circle-ellipsis.svg)] bg-repeat bg-[length:32px_32px] relative">
-        <div className="size-full bg-gradient-to-br from-zinc-950/90 via-zinc-950/70 to-zinc-900/20">
-          <div className="relative z-10 size-full">
-            {children}
+      {/* Animated Gradient Border */}
+      <div className="relative p-[1.5px] rounded-xl overflow-hidden">
+        <motion.span
+          initial={{ rotate: 0 }}
+          whileInView={{ rotate: 360 }}
+          transition={{ duration: 4, ease: "linear", repeat: Infinity }}
+          viewport={{ once: false }}
+          className="absolute inset-[-1000%] bg-[conic-gradient(from_90deg_at_50%_50%,#9B52D8_0%,#EC4899_25%,#3B82F6_50%,#10B981_75%,#9B52D8_100%)]"
+        />
+        <div className="relative bg-zinc-950/95 backdrop-blur-sm rounded-xl transition-all duration-300 ease-out hover:bg-zinc-950/90 hover:shadow-lg hover:shadow-zinc-900/20 hover:scale-[1.02] focus-within:ring-2 focus-within:ring-zinc-600/50 focus-within:ring-offset-2 focus-within:ring-offset-zinc-950 p-1">
+          <div className="size-full bg-[url(/svg/circle-ellipsis.svg)] bg-repeat bg-[length:32px_32px] relative">
+            <div className="size-full bg-gradient-to-br from-zinc-950/90 via-zinc-950/70 to-zinc-900/20">
+              <div className="relative z-10 size-full">
+                <GlowingEffect
+                  spread={40}
+                  glow={true}
+                  disabled={false}
+                  proximity={80}
+                  inactiveZone={0.01}
+                  borderWidth={3}
+                />
+                {children}
+              </div>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 

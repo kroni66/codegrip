@@ -26,19 +26,19 @@ export default function Header() {
           <div className="hidden md:flex space-x-12">
             <button
               onClick={() => scrollToSection('projects')}
-              className="text-gray-300 hover:text-white transition-colors font-light"
+              className="text-white hover:text-gray-200 transition-colors font-light bg-white text-black px-4 py-2 rounded-md hover:bg-gray-100"
             >
               Projekty
             </button>
             <button
               onClick={() => scrollToSection('about')}
-              className="text-gray-300 hover:text-white transition-colors font-light"
+              className="text-white hover:text-gray-200 transition-colors font-light bg-white text-black px-4 py-2 rounded-md hover:bg-gray-100"
             >
               O mně
             </button>
             <button
               onClick={() => scrollToSection('products')}
-              className="text-gray-300 hover:text-white transition-colors font-light"
+              className="text-white hover:text-gray-200 transition-colors font-light bg-white text-black px-4 py-2 rounded-md hover:bg-gray-100"
             >
               Služby
             </button>
@@ -47,7 +47,7 @@ export default function Header() {
           {/* Mobile Menu Button */}
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="md:hidden text-gray-300 hover:text-white transition-colors"
+            className="md:hidden bg-white text-black px-3 py-2 rounded-md hover:bg-gray-100 transition-colors"
           >
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path
@@ -66,19 +66,19 @@ export default function Header() {
             <div className="flex flex-col space-y-6">
               <button
                 onClick={() => scrollToSection('projects')}
-                className="text-left text-gray-300 hover:text-white transition-colors font-light"
+                className="text-left bg-white text-black px-4 py-2 rounded-md hover:bg-gray-100 transition-colors font-light"
               >
                 Projekty
               </button>
               <button
                 onClick={() => scrollToSection('about')}
-                className="text-left text-gray-300 hover:text-white transition-colors font-light"
+                className="text-left bg-white text-black px-4 py-2 rounded-md hover:bg-gray-100 transition-colors font-light"
               >
                 O mně
               </button>
               <button
                 onClick={() => scrollToSection('products')}
-                className="text-left text-gray-300 hover:text-white transition-colors font-light"
+                className="text-left bg-white text-black px-4 py-2 rounded-md hover:bg-gray-100 transition-colors font-light"
               >
                 Služby
               </button>
