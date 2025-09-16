@@ -26,8 +26,8 @@ export default function CompassMenu() {
               className="w-10 h-10 hover:scale-110 transition-transform duration-300"
             />
             <div className="hidden md:block">
-              <h1 className="text-xl font-light text-white">
-                CODE<span style={{color: 'white', fontWeight: 'bold'}}>&lt;/&gt;</span>GRIP
+              <h1 className="text-xl font-bold tracking-wide text-white hover:text-purple-300 transition-colors duration-300">
+                CODEGRIP
               </h1>
             </div>
           </div>

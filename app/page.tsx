@@ -622,17 +622,9 @@ export default function Home() {
                     alt="CodeGrip Logo"
                     className="w-12 h-12 mr-4"
                   />
-                  <div className="flex items-baseline">
-                    <span className="text-3xl font-bold tracking-wide text-white">
-                      CODE
-                    </span>
-                    <span className="text-2xl font-mono font-bold mx-1 text-purple-400 bg-purple-400/10 px-2 py-0.5 rounded border border-purple-400/20">
-                      &lt;/&gt;
-                    </span>
-                    <span className="text-3xl font-bold tracking-wide text-white">
-                      GRIP
-                    </span>
-                  </div>
+                  <h3 className="text-3xl font-bold tracking-wide text-white hover:text-purple-300 transition-colors duration-300">
+                    CODEGRIP
+                  </h3>
                 </div>
               <p className="text-gray-300 mb-6 leading-relaxed">
                 Specializujeme se na tvorbu moderních webových aplikací, e-shopů a digitálních řešení.
