@@ -2,9 +2,11 @@
 import { useState, useEffect } from 'react';
 import gsap from 'gsap';
 import CompassMenu from './components/CompassMenu';
+import { projects } from './data/projects';
+import { ProjectCard } from './components/ProjectCard';
 import { CardWithLines, CardBody, serviceCards } from './components/ServiceCard';
-import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
 import { SiTypescript, SiWordpress, SiNextdotjs, SiVuedotjs } from 'react-icons/si';
 import { RotateWords } from './components/RotateWords';
 import { useScrollTrigger, fadeInUp, staggerChildren, scaleIn, cardReveal, cardSlideIn, cardBounce, cardFlip } from './hooks/useGSAPScrollTrigger';
@@ -66,7 +68,7 @@ export default function Home() {
     <>
       <Preloader isLoading={isLoading} onLoadingComplete={handleLoadingComplete} />
       <div className="min-h-screen bg-neutral-950 text-gray-100">
-      {/* Smooth scrolling CSS */}
+        {/* Smooth scrolling CSS */}
       <style jsx global>{`
         html {
           scroll-behavior: smooth;
@@ -82,7 +84,7 @@ export default function Home() {
         badgeText="CodeGrip"
         badgeLabel="New"
         ctaButtons={[
-          { text: "Začněte stavět", href: "#footer", primary: true },
+          { text: "Začít projekt", href: "#footer", primary: true },
           { text: "Naše služby", href: "#services-heading" }
         ]}
         microDetails={["React & Next.js", "Moderní design", "Rychlý vývoj"]}
@@ -111,12 +113,6 @@ export default function Home() {
             .add(titleAnimation, '-=0.8')
             .add(descriptionAnimation, '-=0.6')
             .add(cardsAnimation, '-=0.4');
-        }, {
-          pin: true,
-          start: 'top top',
-          end: '+=200%',
-          scrub: 1,
-          pinSpacing: true
         })}
         id="projects"
         className="min-h-screen flex items-center justify-center py-24 px-6"
@@ -133,177 +129,18 @@ export default function Home() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
-            {/* Project 1 */}
-            <div className="group relative">
-              <div className="absolute inset-0 bg-gradient-to-br from-blue-500/20 to-purple-500/20 rounded-2xl blur-xl group-hover:blur-2xl transition-all duration-500 opacity-0 group-hover:opacity-100"></div>
-              <Card className="relative bg-neutral-900/80 backdrop-blur-sm border border-neutral-800/50 hover:border-blue-500/50 rounded-2xl overflow-hidden transition-all duration-500 hover:scale-[1.02] hover:shadow-2xl hover:shadow-blue-500/10">
-                <div className="relative aspect-[4/3] overflow-hidden">
-                  <img src="/p1.png" alt="sdsped.cz - Moderní webové aplikační rozhraní" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-
-                  {/* Category Badge */}
-                  <div className="absolute top-4 left-4">
-                    <span className="px-3 py-1 bg-blue-500/90 text-white text-xs font-medium rounded-full backdrop-blur-sm">
-                      Web Application
-                    </span>
-                  </div>
-
-                  {/* Hover Overlay */}
-                  <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-4 group-hover:translate-y-0">
-                    {/* Shadow overlay for better text visibility */}
-                    <div className="absolute inset-0 bg-black/50 backdrop-blur-sm rounded-2xl"></div>
-                    <div className="text-center p-6 relative z-10">
-                      <h4 className="text-white text-2xl font-bold mb-2 drop-shadow-lg">sdsped.cz</h4>
-                      <p className="text-gray-200 text-sm mb-4 leading-relaxed drop-shadow-md">Moderní webové aplikační rozhraní s pokročilými funkcemi a intuitivním UX</p>
-                      <div className="flex justify-center gap-2">
-                        <span className="px-2 py-1 bg-blue-500/20 text-blue-300 text-xs rounded-full drop-shadow-sm">React</span>
-                        <span className="px-2 py-1 bg-green-500/20 text-green-300 text-xs rounded-full drop-shadow-sm">Node.js</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </Card>
-            </div>
-
-            {/* Project 2 */}
-            <div className="group relative">
-              <div className="absolute inset-0 bg-gradient-to-br from-purple-500/20 to-pink-500/20 rounded-2xl blur-xl group-hover:blur-2xl transition-all duration-500 opacity-0 group-hover:opacity-100"></div>
-              <Card className="relative bg-neutral-900/80 backdrop-blur-sm border border-neutral-800/50 hover:border-purple-500/50 rounded-2xl overflow-hidden transition-all duration-500 hover:scale-[1.02] hover:shadow-2xl hover:shadow-purple-500/10">
-                <div className="relative aspect-[4/3] overflow-hidden">
-                  <img src="/p2.png" alt="egn-stav.cz - Design SaaS platformy" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-
-                  <div className="absolute top-4 left-4">
-                    <span className="px-3 py-1 bg-purple-500/90 text-white text-xs font-medium rounded-full backdrop-blur-sm">
-                      SaaS Platform
-                    </span>
-                  </div>
-
-                  <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-4 group-hover:translate-y-0">
-                    <div className="text-center p-6 relative z-10">
-                      <h4 className="text-white text-2xl font-bold mb-2 drop-shadow-lg">egn-stav.cz</h4>
-                      <p className="text-gray-200 text-sm mb-4 leading-relaxed drop-shadow-md">Komplexní SaaS řešení pro stavební průmysl s pokročilou analytikou</p>
-                      <div className="flex justify-center gap-2">
-                        <span className="px-2 py-1 bg-purple-500/20 text-purple-300 text-xs rounded-full drop-shadow-sm">Next.js</span>
-                        <span className="px-2 py-1 bg-cyan-500/20 text-cyan-300 text-xs rounded-full drop-shadow-sm">TypeScript</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </Card>
-            </div>
-
-            {/* Project 3 */}
-            <div className="group relative">
-              <div className="absolute inset-0 bg-gradient-to-br from-green-500/20 to-blue-500/20 rounded-2xl blur-xl group-hover:blur-2xl transition-all duration-500 opacity-0 group-hover:opacity-100"></div>
-              <Card className="relative bg-neutral-900/80 backdrop-blur-sm border border-neutral-800/50 hover:border-green-500/50 rounded-2xl overflow-hidden transition-all duration-500 hover:scale-[1.02] hover:shadow-2xl hover:shadow-green-500/10">
-                <div className="relative aspect-[4/3] overflow-hidden">
-                  <img src="/p3.png" alt="purefurniture.cz - Responzivní mobilní aplikace" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-
-                  <div className="absolute top-4 left-4">
-                    <span className="px-3 py-1 bg-green-500/90 text-white text-xs font-medium rounded-full backdrop-blur-sm">
-                      Mobile App
-                    </span>
-                  </div>
-
-                  <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-4 group-hover:translate-y-0">
-                    <div className="text-center p-6 relative z-10">
-                      <h4 className="text-white text-2xl font-bold mb-2 drop-shadow-lg">purefurniture.cz</h4>
-                      <p className="text-gray-200 text-sm mb-4 leading-relaxed drop-shadow-md">Responzivní mobilní aplikace pro prodej nábytku s AR funkcemi</p>
-                      <div className="flex justify-center gap-2">
-                        <span className="px-2 py-1 bg-green-500/20 text-green-300 text-xs rounded-full drop-shadow-sm">React Native</span>
-                        <span className="px-2 py-1 bg-orange-500/20 text-orange-300 text-xs rounded-full drop-shadow-sm">Firebase</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </Card>
-            </div>
-
-            {/* Project 4 */}
-            <div className="group relative">
-              <div className="absolute inset-0 bg-gradient-to-br from-orange-500/20 to-red-500/20 rounded-2xl blur-xl group-hover:blur-2xl transition-all duration-500 opacity-0 group-hover:opacity-100"></div>
-              <Card className="relative bg-neutral-900/80 backdrop-blur-sm border border-neutral-800/50 hover:border-orange-500/50 rounded-2xl overflow-hidden transition-all duration-500 hover:scale-[1.02] hover:shadow-2xl hover:shadow-orange-500/10">
-                <div className="relative aspect-[4/3] overflow-hidden">
-                  <img src="/p4.png" alt="hsgroup.cz - Kompletní systém designu značky" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-
-                  <div className="absolute top-4 left-4">
-                    <span className="px-3 py-1 bg-orange-500/90 text-white text-xs font-medium rounded-full backdrop-blur-sm">
-                      Brand Design
-                    </span>
-                  </div>
-
-                  <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-4 group-hover:translate-y-0">
-                    <div className="text-center p-6 relative z-10">
-                      <h4 className="text-white text-2xl font-bold mb-2 drop-shadow-lg">hsgroup.cz</h4>
-                      <p className="text-gray-200 text-sm mb-4 leading-relaxed drop-shadow-md">Kompletní systém designu značky včetně identity, loga a guidelines</p>
-                      <div className="flex justify-center gap-2">
-                        <span className="px-2 py-1 bg-orange-500/20 text-orange-300 text-xs rounded-full drop-shadow-sm">Figma</span>
-                        <span className="px-2 py-1 bg-purple-500/20 text-purple-300 text-xs rounded-full drop-shadow-sm">Illustrator</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </Card>
-            </div>
-
-            {/* Project 5 */}
-            <div className="group relative">
-              <div className="absolute inset-0 bg-gradient-to-br from-pink-500/20 to-purple-500/20 rounded-2xl blur-xl group-hover:blur-2xl transition-all duration-500 opacity-0 group-hover:opacity-100"></div>
-              <Card className="relative bg-neutral-900/80 backdrop-blur-sm border border-neutral-800/50 hover:border-pink-500/50 rounded-2xl overflow-hidden transition-all duration-500 hover:scale-[1.02] hover:shadow-2xl hover:shadow-pink-500/10">
-                <div className="relative aspect-[4/3] overflow-hidden">
-                  <img src="/p5.png" alt="darksalon.cz - Přepracování online obchodu" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-
-                  <div className="absolute top-4 left-4">
-                    <span className="px-3 py-1 bg-pink-500/90 text-white text-xs font-medium rounded-full backdrop-blur-sm">
-                      E-commerce
-                    </span>
-                  </div>
-
-                  <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-4 group-hover:translate-y-0">
-                    <div className="text-center p-6 relative z-10">
-                      <h4 className="text-white text-2xl font-bold mb-2 drop-shadow-lg">darksalon.cz</h4>
-                      <p className="text-gray-200 text-sm mb-4 leading-relaxed drop-shadow-md">Kompletní přepracování e-commerce platformy s moderním UX</p>
-                      <div className="flex justify-center gap-2">
-                        <span className="px-2 py-1 bg-pink-500/20 text-pink-300 text-xs rounded-full drop-shadow-sm">Shopify</span>
-                        <span className="px-2 py-1 bg-blue-500/20 text-blue-300 text-xs rounded-full drop-shadow-sm">Liquid</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </Card>
-            </div>
-
-            {/* Project 6 */}
-            <div className="group relative">
-              <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/20 to-blue-500/20 rounded-2xl blur-xl group-hover:blur-2xl transition-all duration-500 opacity-0 group-hover:opacity-100"></div>
-              <Card className="relative bg-neutral-900/80 backdrop-blur-sm border border-neutral-800/50 hover:border-cyan-500/50 rounded-2xl overflow-hidden transition-all duration-500 hover:scale-[1.02] hover:shadow-2xl hover:shadow-cyan-500/10">
-                <div className="relative aspect-[4/3] overflow-hidden">
-                  <img src="/ikonka.png" alt="CodeGrip - Identita značky a design loga" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-
-                  <div className="absolute top-4 left-4">
-                    <span className="px-3 py-1 bg-cyan-500/90 text-white text-xs font-medium rounded-full backdrop-blur-sm">
-                      Branding
-                    </span>
-                  </div>
-
-                  <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-4 group-hover:translate-y-0">
-                    <div className="text-center p-6 relative z-10">
-                      <h4 className="text-white text-2xl font-bold mb-2 drop-shadow-lg">CodeGrip</h4>
-                      <p className="text-gray-200 text-sm mb-4 leading-relaxed drop-shadow-md">Kompletní identita značky včetně loga, barevné palety a brand guidelines</p>
-                      <div className="flex justify-center gap-2">
-                        <span className="px-2 py-1 bg-cyan-500/20 text-cyan-300 text-xs rounded-full drop-shadow-sm">Brand Identity</span>
-                        <span className="px-2 py-1 bg-purple-500/20 text-purple-300 text-xs rounded-full drop-shadow-sm">Logo Design</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </Card>
-            </div>
+            {projects.map((p) => (
+              <ProjectCard
+                key={p.id}
+                imageSrc={p.imageSrc}
+                imageAlt={p.imageAlt}
+                title={p.title}
+                description={p.description}
+                tags={p.tags}
+                category={p.category}
+                categoryColor={p.categoryColor}
+              />
+            ))}
           </div>
 
           {/* Call to Action */}
@@ -345,12 +182,6 @@ export default function Home() {
               stagger: 0.2,
               ease: 'power2.out'
             }), '-=0.5');
-        }, {
-          pin: true,
-          start: 'top top',
-          end: '+=150%',
-          scrub: 1,
-          pinSpacing: true
         })}
         id="about"
         className="min-h-screen flex items-center justify-center py-20 px-6"
@@ -421,12 +252,6 @@ export default function Home() {
             .add(titleAnimation, '-=0.8')
             .add(descriptionAnimation, '-=0.6')
             .add(cardsAnimation, '-=0.4');
-        }, {
-          pin: true,
-          start: 'top top',
-          end: '+=200%',
-          scrub: 1,
-          pinSpacing: true
         })}
         className="min-h-screen flex items-center justify-center py-24 px-6"
         aria-labelledby="services-heading"
@@ -491,12 +316,6 @@ export default function Home() {
             .add(descriptionAnimation, '-=0.4')
             .add(badgeAnimation, '-=0.2')
             .add(benefitsAnimation, '-=0.1');
-        }, {
-          pin: true,
-          start: 'top top',
-          end: '+=200%',
-          scrub: 1,
-          pinSpacing: true
         })}
         className="min-h-screen flex items-center justify-center py-24 px-6 bg-gradient-to-br from-neutral-950 via-neutral-900/50 to-neutral-950 relative overflow-hidden"
         style={{ opacity: 1, transform: 'translateY(0)' }} // Fallback CSS
@@ -571,12 +390,9 @@ export default function Home() {
 
               {/* CTA Buttons */}
               <div className="flex flex-col sm:flex-row gap-4">
-                <button className="hero-cta group px-8 py-4 text-lg font-light tracking-wide rounded-full border-2 text-white border-white hover:bg-white/5 hover:border-white/60 hover:text-white transition-all duration-500 transform hover:scale-105 bg-transparent inline-flex items-center justify-center">
+                <a href="#contact" className="hero-cta group px-8 py-4 text-lg font-light tracking-wide rounded-full border-2 text-white border-white hover:bg-white/5 hover:border-white/60 hover:text-white transition-all duration-500 transform hover:scale-105 bg-transparent inline-flex items-center justify-center">
                   <span className="relative z-10">Využít nabídku</span>
-                </button>
-                <button className="hero-cta group px-8 py-4 text-lg font-light tracking-wide rounded-full border-2 text-white border-white hover:bg-white/5 hover:border-white/60 hover:text-white transition-all duration-500 transform hover:scale-105 bg-transparent inline-flex items-center justify-center">
-                  <span className="relative z-10">Zjistit více</span>
-                </button>
+                </a>
               </div>
             </div>
 
@@ -655,9 +471,6 @@ export default function Home() {
                   <span className="text-gray-300">Integrace s cloudovými službami</span>
                 </div>
               </div>
-              <a href="#mobile" className="hero-cta group px-8 py-4 text-lg font-light tracking-wide rounded-full border-2 text-white border-white hover:bg-white/5 hover:border-white/60 hover:text-white transition-all duration-500 transform hover:scale-105 bg-transparent inline-flex items-center justify-center">
-                <span className="relative z-10">Zobrazit mobilní projekty</span>
-              </a>
             </div>
 
             {/* Image */}
@@ -701,12 +514,6 @@ export default function Home() {
             .add(titleAnimation, '-=0.8')
             .add(descriptionAnimation, '-=0.6')
             .add(cardsAnimation, '-=0.4');
-        }, {
-          pin: true,
-          start: 'top top',
-          end: '+=200%',
-          scrub: 1,
-          pinSpacing: true
         })}
         id="products"
         className="min-h-screen flex items-center justify-center py-24 px-6"
@@ -829,12 +636,6 @@ export default function Home() {
           return gsap.timeline()
             .add(cardAnimation)
             .add(titleAnimation, '-=0.8');
-        }, {
-          pin: true,
-          start: 'top top',
-          end: '+=100%',
-          scrub: 1,
-          pinSpacing: true
         })}
         className="min-h-screen flex items-center justify-center py-20 px-6"
       >
@@ -871,12 +672,6 @@ export default function Home() {
             .add(titleAnimation, '-=0.8')
             .add(descriptionAnimation, '-=0.6')
             .add(cardsAnimation, '-=0.4');
-        }, {
-          pin: true,
-          start: 'top top',
-          end: '+=150%',
-          scrub: 1,
-          pinSpacing: true
         })}
         className="min-h-screen flex items-center justify-center py-24 px-6"
       >
@@ -941,6 +736,108 @@ export default function Home() {
             </div>
           </div>
 
+        </div>
+      </section>
+
+      {/* Contact Info Box */}
+      <section id="contact" className="py-16 px-6">
+        <div className="max-w-5xl mx-auto">
+          <div className="relative overflow-hidden bg-gradient-to-br from-neutral-900/90 to-neutral-950/90 backdrop-blur-xl border border-neutral-800/60 rounded-2xl shadow-2xl">
+            <div className="absolute inset-0 pointer-events-none">
+              <div className="absolute -top-10 -left-10 w-48 h-48 bg-custom-color-1/10 rounded-full blur-3xl"></div>
+              <div className="absolute -bottom-10 -right-10 w-56 h-56 bg-custom-color-2/10 rounded-full blur-3xl"></div>
+            </div>
+            <div className="p-8 md:p-10">
+              <h3 className="text-2xl md:text-3xl font-light mb-3 tracking-wide text-white">Kontakt</h3>
+              <p className="text-gray-400 mb-8">Ozvěte se nám – odpovíme zpravidla do 24 hodin.</p>
+
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-gray-300">
+                {/* Email */}
+                <div className="group relative border border-neutral-800/60 rounded-xl p-5 hover:border-custom-color-1/60 transition-colors">
+                  <div className="flex items-start gap-3">
+                    <div className="mt-1 w-9 h-9 rounded-lg bg-custom-color-1/15 text-custom-color-1 flex items-center justify-center">
+                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                      </svg>
+                    </div>
+                    <div className="flex-1">
+                      <div className="text-sm text-gray-400">E-mail</div>
+                      <a href="mailto:info@codegrip.cz" className="text-white hover:underline break-all">info@codegrip.cz</a>
+                      <div className="mt-3 flex gap-2">
+                        <Button
+                          variant="secondary"
+                          className="h-8 px-3 bg-neutral-800/60 hover:bg-neutral-700/60 text-gray-200 border border-white/10"
+                          onClick={() => navigator.clipboard.writeText('info@codegrip.cz')}
+                          aria-label="Kopírovat e-mail"
+                        >
+                          Zkopírovat
+                        </Button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Phone */}
+                <div className="group relative border border-neutral-800/60 rounded-xl p-5 hover:border-custom-color-2/60 transition-colors">
+                  <div className="flex items-start gap-3">
+                    <div className="mt-1 w-9 h-9 rounded-lg bg-custom-color-2/15 text-custom-color-2 flex items-center justify-center">
+                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                      </svg>
+                    </div>
+                    <div className="flex-1">
+                      <div className="text-sm text-gray-400">Telefon</div>
+                      <a href="tel:+420720329593" className="text-white hover:underline">+ 420 720 329 593</a>
+                      <div className="mt-3 flex gap-2">
+                        <Button
+                          variant="secondary"
+                          className="h-8 px-3 bg-neutral-800/60 hover:bg-neutral-700/60 text-gray-200 border border-white/10"
+                          onClick={() => navigator.clipboard.writeText('+420720329593')}
+                          aria-label="Kopírovat telefon"
+                        >
+                          Zkopírovat
+                        </Button>
+                        <a
+                          href="tel:+420720329593"
+                          className="inline-flex items-center h-8 px-3 rounded-md bg-custom-color-2/20 text-custom-color-2 border border-custom-color-2/30 hover:bg-custom-color-2/30 transition-colors"
+                          aria-label="Zavolat"
+                        >
+                          Zavolat
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Address */}
+                <div className="group relative border border-neutral-800/60 rounded-xl p-5 hover:border-custom-color-3/60 transition-colors">
+                  <div className="flex items-start gap-3">
+                    <div className="mt-1 w-9 h-9 rounded-lg bg-custom-color-3/15 text-custom-color-3 flex items-center justify-center">
+                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                      </svg>
+                    </div>
+                    <div className="flex-1">
+                      <div className="text-sm text-gray-400">Adresa</div>
+                      <div className="text-white">Brno, Česká Republika</div>
+                      <div className="mt-3 flex gap-2">
+                        <a
+                          href="https://www.google.com/maps/search/?api=1&query=Brno%2C%20%C4%8Cesk%C3%A1%20Republika"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center h-8 px-3 rounded-md bg-custom-color-3/20 text-custom-color-3 border border-custom-color-3/30 hover:bg-custom-color-3/30 transition-colors"
+                          aria-label="Otevřít v Mapách"
+                        >
+                          Otevřít v Mapách
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -1066,10 +963,7 @@ export default function Home() {
                   </a>
                 </li>
                 <li>
-                  <a href="#blog" className="text-gray-300 hover:text-custom-color-4 transition-colors duration-200 flex items-center group">
-                    <span className="w-1.5 h-1.5 bg-custom-color-4 rounded-full mr-3 opacity-0 group-hover:opacity-100 transition-opacity"></span>
-                    Blog
-                  </a>
+                  {/* Blog link removed */}
                 </li>
               </ul>
             </div>
@@ -1082,25 +976,22 @@ export default function Home() {
                   <svg className="w-5 h-5 mr-3 text-custom-color-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                   </svg>
-                  <span>hello@codegrip.cz</span>
+                  <span>info@codegrip.cz</span>
                 </div>
                 <div className="flex items-center text-gray-300">
                   <svg className="w-5 h-5 mr-3 text-custom-color-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
                   </svg>
-                  <span>+420 720 485 522</span>
+                  <span>+ 420 720 329 593</span>
                 </div>
                 <div className="flex items-center text-gray-300">
                   <svg className="w-5 h-5 mr-3 text-custom-color-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                   </svg>
-                  <span>Prague, Czech Republic</span>
+                  <span>Brno, Česká Republika</span>
                 </div>
               </div>
-              <Button className="mt-6 bg-gradient-to-r from-custom-color-1 to-custom-color-2 hover:from-custom-color-2 hover:to-custom-color-1 text-white px-6 py-3 text-sm font-medium rounded-xl shadow-lg hover:shadow-custom-color-1/25 transition-all duration-300 transform hover:scale-105">
-                Zarezervovat hovor
-              </Button>
             </div>
           </div>
 
