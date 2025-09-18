@@ -461,6 +461,143 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Exclusive Promo Section */}
+      <section
+        ref={useScrollTrigger((element) => {
+          // Set initial state - ensure section is always visible
+          gsap.set(element, { opacity: 1, y: 0 });
+
+          const cardElement = element.querySelector('.promo-card');
+          const titleElement = element.querySelector('h2');
+          const subtitleElement = element.querySelector('h3');
+          const descriptionElement = element.querySelector('p');
+          const badgeElement = element.querySelector('.promo-badge');
+          const benefits = element.querySelectorAll('.benefit-item');
+
+          // Card reveal animation
+          const cardAnimation = cardElement ? cardReveal(cardElement as HTMLElement, 0) : gsap.timeline();
+          const titleAnimation = titleElement ? fadeInUp(titleElement, 0.3) : gsap.timeline();
+          const subtitleAnimation = subtitleElement ? fadeInUp(subtitleElement, 0.5) : gsap.timeline();
+          const descriptionAnimation = descriptionElement ? fadeInUp(descriptionElement, 0.7) : gsap.timeline();
+          const badgeAnimation = badgeElement ? cardBounce(badgeElement as HTMLElement, 0.9) : gsap.timeline();
+
+          // Animate benefits with stagger
+          const benefitsAnimation = staggerChildren(element, '.benefit-item', 1.1);
+
+          return gsap.timeline()
+            .add(cardAnimation)
+            .add(titleAnimation, '-=0.8')
+            .add(subtitleAnimation, '-=0.6')
+            .add(descriptionAnimation, '-=0.4')
+            .add(badgeAnimation, '-=0.2')
+            .add(benefitsAnimation, '-=0.1');
+        }, {
+          pin: true,
+          start: 'top top',
+          end: '+=200%',
+          scrub: 1,
+          pinSpacing: true
+        })}
+        className="min-h-screen flex items-center justify-center py-24 px-6 bg-gradient-to-br from-neutral-950 via-neutral-900/50 to-neutral-950 relative overflow-hidden"
+        style={{ opacity: 1, transform: 'translateY(0)' }} // Fallback CSS
+      >
+        {/* Background decorations */}
+        <div className="absolute inset-0">
+          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-gradient-to-r from-purple-500/10 to-blue-500/10 rounded-full blur-3xl"></div>
+          <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-gradient-to-r from-emerald-500/10 to-cyan-500/10 rounded-full blur-3xl"></div>
+        </div>
+
+        <div className="promo-card w-full max-w-7xl mx-auto bg-gradient-to-br from-neutral-900/90 to-neutral-950/90 backdrop-blur-xl border border-neutral-800/50 rounded-3xl shadow-2xl shadow-purple-500/20 p-12 md:p-16 relative z-10">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+            {/* Content */}
+            <div className="text-left">
+              {/* Exclusive Badge */}
+              <div className="promo-badge inline-flex items-center gap-2 bg-gradient-to-r from-purple-500/20 to-blue-500/20 backdrop-blur-sm border border-purple-400/30 rounded-full px-4 py-2 mb-8">
+                <div className="w-2 h-2 bg-purple-400 rounded-full animate-pulse"></div>
+                <span className="text-purple-300 text-sm font-medium">Exkluzivní nabídka pro všechny klienty</span>
+              </div>
+
+              <h2 className="text-4xl md:text-5xl lg:text-6xl font-light mb-6 tracking-wide text-white leading-tight">
+                Hosting + Doména
+                <span className="block text-white">
+                  ZDARMA na 1 rok
+                </span>
+              </h2>
+
+              <h3 className="text-xl md:text-2xl text-gray-300 mb-8 leading-relaxed">
+                S každou objednávkou webových stránek získáte hosting a doménu zcela zdarma na celý první rok.
+              </h3>
+
+              <p className="text-lg text-gray-400 mb-10 leading-relaxed">
+                Tato exkluzivní nabídka je dostupná pro všechny klienty CodeGrip bez ohledu na velikost projektu.
+                Ušetřete tisíce korun a spusťte svůj projekt bez počátečních nákladů.
+              </p>
+
+              {/* Benefits */}
+              <div className="space-y-4 mb-10">
+                <div className="benefit-item flex items-center space-x-3">
+                  <div className="w-8 h-8 bg-gradient-to-r from-purple-500 to-blue-600 rounded-full flex items-center justify-center">
+                    <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                  </div>
+                  <span className="text-gray-300">Rychlé SSD hostingové řešení</span>
+                </div>
+                <div className="benefit-item flex items-center space-x-3">
+                  <div className="w-8 h-8 bg-gradient-to-r from-purple-500 to-blue-600 rounded-full flex items-center justify-center">
+                    <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                  </div>
+                  <span className="text-gray-300">Premium doména v ceně</span>
+                </div>
+                <div className="benefit-item flex items-center space-x-3">
+                  <div className="w-8 h-8 bg-gradient-to-r from-purple-500 to-blue-600 rounded-full flex items-center justify-center">
+                    <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                  </div>
+                  <span className="text-gray-300">Automatické zálohování</span>
+                </div>
+                <div className="benefit-item flex items-center space-x-3">
+                  <div className="w-8 h-8 bg-gradient-to-r from-purple-500 to-blue-600 rounded-full flex items-center justify-center">
+                    <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                  </div>
+                  <span className="text-gray-300">24/7 technická podpora</span>
+                </div>
+              </div>
+
+              {/* CTA Buttons */}
+              <div className="flex flex-col sm:flex-row gap-4">
+                <button className="hero-cta group px-8 py-4 text-lg font-light tracking-wide rounded-full border-2 text-white border-white hover:bg-white/5 hover:border-white/60 hover:text-white transition-all duration-500 transform hover:scale-105 bg-transparent inline-flex items-center justify-center">
+                  <span className="relative z-10">Využít nabídku</span>
+                </button>
+                <button className="hero-cta group px-8 py-4 text-lg font-light tracking-wide rounded-full border-2 text-white border-white hover:bg-white/5 hover:border-white/60 hover:text-white transition-all duration-500 transform hover:scale-105 bg-transparent inline-flex items-center justify-center">
+                  <span className="relative z-10">Zjistit více</span>
+                </button>
+              </div>
+            </div>
+
+            {/* Image */}
+            <div className="relative">
+              <div className="relative rounded-3xl overflow-hidden shadow-2xl shadow-purple-500/20">
+                <img
+                  src="https://images.unsplash.com/photo-1667036679091-6da384768075?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                  alt="Professional web developer typing website URL in browser address bar"
+                  className="w-full h-[500px] object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent"></div>
+              </div>
+
+              {/* Decorative elements */}
+              <div className="absolute -bottom-4 -left-4 w-32 h-32 bg-gradient-to-r from-emerald-500/20 to-cyan-500/20 rounded-full blur-xl"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Mobile App Development Section */}
       <section
         ref={useScrollTrigger((element) => {

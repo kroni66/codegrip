@@ -83,26 +83,41 @@ export function CookieBanner({ onAccept, onReject, onCustomSettings }: CookieBan
   if (!isVisible) return null;
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 z-50 p-4 bg-gradient-to-r from-neutral-900/95 to-neutral-950/95 backdrop-blur-xl border-t border-neutral-800/50 shadow-2xl">
-      <div className="max-w-7xl mx-auto">
-        <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+    <div className="fixed bottom-0 left-0 right-0 z-50 p-4">
+      {/* Liquid glass background effect */}
+      <div className="absolute inset-0 bg-gradient-to-r from-white/10 via-white/5 to-white/10 backdrop-blur-2xl rounded-t-3xl shadow-2xl border-t border-white/20"></div>
+      
+      {/* Animated liquid border */}
+      <div className="absolute inset-0 rounded-t-3xl">
+        <div className="absolute inset-0 bg-gradient-to-r from-purple-500/30 via-blue-500/30 to-cyan-500/30 rounded-t-3xl blur-sm animate-pulse"></div>
+        <div className="absolute inset-0 bg-gradient-to-r from-purple-400/20 via-transparent to-cyan-400/20 rounded-t-3xl"></div>
+      </div>
+      
+      {/* Liquid droplet effects */}
+      <div className="absolute top-2 left-1/4 w-2 h-2 bg-white/30 rounded-full blur-sm animate-bounce" style={{ animationDelay: '0s' }}></div>
+      <div className="absolute top-3 right-1/3 w-1.5 h-1.5 bg-purple-400/40 rounded-full blur-sm animate-bounce" style={{ animationDelay: '1s' }}></div>
+      <div className="absolute top-1 right-1/4 w-1 h-1 bg-cyan-400/30 rounded-full blur-sm animate-bounce" style={{ animationDelay: '2s' }}></div>
+      
+      {/* Main content */}
+      <div className="relative max-w-7xl mx-auto">
+        <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 p-6">
           {/* Content */}
           <div className="flex-1">
-            <h3 className="text-lg font-semibold text-white mb-2">
+            <h3 className="text-lg font-semibold text-white mb-2 drop-shadow-sm">
               🍪 Používáme cookies
             </h3>
-            <p className="text-gray-300 text-sm leading-relaxed">
+            <p className="text-gray-200 text-sm leading-relaxed drop-shadow-sm">
               Naše webové stránky používají soubory cookies pro lepší uživatelskou zkušenost,
               analytiku a personalizaci obsahu. Pokračováním v používání této stránky
               souhlasíte s našimi zásadami používání cookies.
             </p>
-            <div className="mt-2 text-xs text-gray-400">
+            <div className="mt-2 text-xs text-gray-300 drop-shadow-sm">
               Více informací najdete v našich{' '}
-              <a href="#" className="text-purple-400 hover:text-purple-300 underline">
+              <a href="#" className="text-purple-300 hover:text-purple-200 underline transition-colors">
                 Zásadách používání cookies
               </a>{' '}
               a{' '}
-              <a href="#" className="text-purple-400 hover:text-purple-300 underline">
+              <a href="#" className="text-purple-300 hover:text-purple-200 underline transition-colors">
                 Zásadách ochrany osobních údajů
               </a>
             </div>
@@ -112,7 +127,7 @@ export function CookieBanner({ onAccept, onReject, onCustomSettings }: CookieBan
           <div className="flex flex-col sm:flex-row gap-3 items-start md:items-center">
             <button
               onClick={openSettings}
-              className="text-sm text-purple-400 hover:text-purple-300 underline transition-colors"
+              className="text-sm text-purple-300 hover:text-purple-200 underline transition-colors drop-shadow-sm"
             >
               Přizpůsobit nastavení
             </button>
@@ -120,14 +135,14 @@ export function CookieBanner({ onAccept, onReject, onCustomSettings }: CookieBan
               onClick={handleReject}
               variant="outline"
               size="sm"
-              className="bg-transparent border-neutral-600 text-gray-300 hover:bg-neutral-800 hover:text-white transition-colors"
+              className="bg-white/10 border-white/30 text-gray-200 hover:bg-white/20 hover:text-white transition-all duration-300 backdrop-blur-sm drop-shadow-sm"
             >
               Odmítnout
             </Button>
             <Button
               onClick={handleAccept}
               size="sm"
-              className="bg-custom-color-2 hover:bg-custom-color-1 text-white shadow-lg hover:shadow-custom-color-2/25 transition-all duration-300"
+              className="bg-gradient-to-r from-purple-500/80 to-blue-600/80 hover:from-purple-600/90 hover:to-blue-700/90 text-white shadow-lg hover:shadow-purple-500/25 transition-all duration-300 backdrop-blur-sm border border-white/20 drop-shadow-sm"
             >
               Přijmout vše
             </Button>
@@ -136,19 +151,19 @@ export function CookieBanner({ onAccept, onReject, onCustomSettings }: CookieBan
           {/* Close button */}
           <button
             onClick={handleClose}
-            className="absolute top-3 right-3 p-1 text-gray-400 hover:text-white transition-colors"
+            className="absolute top-3 right-3 p-2 text-gray-300 hover:text-white transition-colors bg-white/5 hover:bg-white/10 rounded-full backdrop-blur-sm drop-shadow-sm"
             aria-label="Zavřít banner"
           >
-            <X size={20} />
+            <X size={16} />
           </button>
         </div>
 
-        {/* Progress indicator */}
-        <div className="mt-4 flex items-center gap-2">
-          <div className="flex-1 h-1 bg-neutral-700 rounded-full overflow-hidden">
-            <div className="h-full bg-gradient-to-r from-custom-color-1 to-custom-color-2 rounded-full animate-pulse" style={{ width: '60%' }}></div>
+        {/* Liquid progress indicator */}
+        <div className="mt-4 flex items-center gap-2 px-6 pb-2">
+          <div className="flex-1 h-1.5 bg-white/20 rounded-full overflow-hidden backdrop-blur-sm">
+            <div className="h-full bg-gradient-to-r from-purple-400/60 via-blue-400/60 to-cyan-400/60 rounded-full animate-pulse shadow-inner" style={{ width: '60%' }}></div>
           </div>
-          <span className="text-xs text-gray-500">Automaticky zavřeno za 30s</span>
+          <span className="text-xs text-gray-300 drop-shadow-sm">Automaticky zavřeno za 30s</span>
         </div>
       </div>
 
