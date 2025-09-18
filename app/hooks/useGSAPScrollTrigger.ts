@@ -33,10 +33,16 @@ export const useScrollTrigger = (
     const element = elementRef.current;
     if (!element) return;
 
-    // Create the animation
+    // Create the animation timeline
     const tl = animation(element);
 
-    // Create ScrollTrigger
+    // Set initial state - hide elements before animation
+    gsap.set(element, {
+      opacity: 0,
+      y: options.start?.includes('top') ? 50 : 0
+    });
+
+    // Create ScrollTrigger with proper reverse handling
     const trigger = ScrollTrigger.create({
       trigger: options.trigger || element,
       start: options.start || 'top 80%',
@@ -46,11 +52,46 @@ export const useScrollTrigger = (
       pinSpacing: options.pinSpacing !== undefined ? options.pinSpacing : true,
       anticipatePin: options.anticipatePin || 0,
       markers: options.markers || false,
-      animation: tl,
-      onEnter: options.onEnter,
-      onLeave: options.onLeave,
-      onEnterBack: options.onEnterBack,
-      onLeaveBack: options.onLeaveBack,
+      onEnter: () => {
+        // Play animation forward when entering
+        gsap.to(element, {
+          opacity: 1,
+          y: 0,
+          duration: 1,
+          ease: 'power2.out'
+        });
+        options.onEnter?.();
+      },
+      onLeave: () => {
+        // Hide when leaving (scrolling down past the section)
+        gsap.to(element, {
+          opacity: 0,
+          y: -50,
+          duration: 0.5,
+          ease: 'power2.out'
+        });
+        options.onLeave?.();
+      },
+      onEnterBack: () => {
+        // Show when entering from below (scrolling back up)
+        gsap.to(element, {
+          opacity: 1,
+          y: 0,
+          duration: 1,
+          ease: 'power2.out'
+        });
+        options.onEnterBack?.();
+      },
+      onLeaveBack: () => {
+        // Hide when leaving upward (scrolling up past the section)
+        gsap.to(element, {
+          opacity: 0,
+          y: 50,
+          duration: 0.5,
+          ease: 'power2.out'
+        });
+        options.onLeaveBack?.();
+      },
     });
 
     return () => {

@@ -10,6 +10,7 @@ import { RotateWords } from './components/RotateWords';
 import { useScrollTrigger, fadeInUp, staggerChildren, scaleIn, cardReveal, cardSlideIn, cardBounce, cardFlip } from './hooks/useGSAPScrollTrigger';
 import { Preloader } from './components/Preloader';
 import { TestimonialsMarquee } from './components/TestimonialsMarquee';
+import { GrafickyDesignMarquee } from './components/GrafickyDesign';
 import { CookieBanner, useCookieConsent } from './components/ui/cookie-banner';
 import { HeroSection } from './components/ui/hero-section';
 import Hero from './components/ui/neural-network-hero';
@@ -91,19 +92,14 @@ export default function Home() {
       {/* Enhanced Projects Section */}
       <section
         ref={useScrollTrigger((element) => {
-          // Set initial state - ensure section is always visible
-          gsap.set(element, { opacity: 1, y: 0 });
-
           const cardElement = element.querySelector('.card-content');
           const titleElement = element.querySelector('h2');
           const descriptionElement = element.querySelector('p');
 
-          // Card reveal animation
           const cardAnimation = cardElement ? cardReveal(cardElement as HTMLElement, 0) : gsap.timeline();
           const titleAnimation = titleElement ? fadeInUp(titleElement, 0.3) : gsap.timeline();
           const descriptionAnimation = descriptionElement ? fadeInUp(descriptionElement, 0.5) : gsap.timeline();
 
-          // Animate project cards with stagger
           const cardsAnimation = staggerChildren(element, '.group', 0.7);
 
           return gsap.timeline()
@@ -120,7 +116,6 @@ export default function Home() {
         })}
         id="projects"
         className="min-h-screen flex items-center justify-center py-24 px-6"
-        style={{ opacity: 1, transform: 'translateY(0)' }} // Fallback CSS
       >
         <div className="card-content w-full max-w-7xl mx-auto bg-gradient-to-br from-neutral-900/90 to-neutral-950/90 backdrop-blur-xl border border-neutral-800/50 rounded-3xl shadow-2xl shadow-purple-500/20 p-12 md:p-16">
           <div className="text-center mb-20">
@@ -321,14 +316,10 @@ export default function Home() {
       {/* About Me Section */}
       <section
         ref={useScrollTrigger((element) => {
-          // Set initial state
-          gsap.set(element, { opacity: 1, y: 0 });
-
           const cardElement = element.querySelector('.card-content');
           const titleElement = element.querySelector('h2');
           const textElements = element.querySelectorAll('p');
 
-          // Card reveal animation
           const cardAnimation = cardElement ? cardSlideIn(cardElement as HTMLElement, 'left', 0) : gsap.timeline();
           const titleAnimation = titleElement ? fadeInUp(titleElement, 0.3) : gsap.timeline();
 
@@ -354,7 +345,6 @@ export default function Home() {
         })}
         id="about"
         className="min-h-screen flex items-center justify-center py-20 px-6"
-        style={{ opacity: 1, transform: 'translateY(0)' }} // Fallback CSS
       >
         <div className="card-content w-full max-w-6xl mx-auto bg-gradient-to-br from-neutral-900/90 to-neutral-950/90 backdrop-blur-xl border border-neutral-800/50 rounded-3xl shadow-2xl shadow-blue-500/20 p-12 md:p-16">
           <div className="flex-1 text-left">
@@ -401,19 +391,14 @@ export default function Home() {
       {/* My Services Section */}
       <section
         ref={useScrollTrigger((element) => {
-          // Set initial state
-          gsap.set(element, { opacity: 1, y: 0 });
-
           const cardElement = element.querySelector('.card-content');
           const titleElement = element.querySelector('h2');
           const descriptionElement = element.querySelector('p');
 
-          // Card reveal animation
           const cardAnimation = cardElement ? cardBounce(cardElement as HTMLElement, 0) : gsap.timeline();
           const titleAnimation = titleElement ? fadeInUp(titleElement, 0.3) : gsap.timeline();
           const descriptionAnimation = descriptionElement ? fadeInUp(descriptionElement, 0.5) : gsap.timeline();
 
-          // Animate service cards with stagger
           const cardsAnimation = staggerChildren(element, 'article', 0.7);
 
           return gsap.timeline()
@@ -430,7 +415,6 @@ export default function Home() {
         })}
         className="min-h-screen flex items-center justify-center py-24 px-6"
         aria-labelledby="services-heading"
-        style={{ opacity: 1, transform: 'translateY(0)' }} // Fallback CSS
       >
         <div className="card-content w-full max-w-7xl mx-auto bg-gradient-to-br from-neutral-900/90 to-neutral-950/90 backdrop-blur-xl border border-neutral-800/50 rounded-3xl shadow-2xl shadow-green-500/20 p-12 md:p-16">
           <header className="text-center mb-20">
@@ -464,9 +448,6 @@ export default function Home() {
       {/* Exclusive Promo Section */}
       <section
         ref={useScrollTrigger((element) => {
-          // Set initial state - ensure section is always visible
-          gsap.set(element, { opacity: 1, y: 0 });
-
           const cardElement = element.querySelector('.promo-card');
           const titleElement = element.querySelector('h2');
           const subtitleElement = element.querySelector('h3');
@@ -474,14 +455,12 @@ export default function Home() {
           const badgeElement = element.querySelector('.promo-badge');
           const benefits = element.querySelectorAll('.benefit-item');
 
-          // Card reveal animation
           const cardAnimation = cardElement ? cardReveal(cardElement as HTMLElement, 0) : gsap.timeline();
           const titleAnimation = titleElement ? fadeInUp(titleElement, 0.3) : gsap.timeline();
           const subtitleAnimation = subtitleElement ? fadeInUp(subtitleElement, 0.5) : gsap.timeline();
           const descriptionAnimation = descriptionElement ? fadeInUp(descriptionElement, 0.7) : gsap.timeline();
           const badgeAnimation = badgeElement ? cardBounce(badgeElement as HTMLElement, 0.9) : gsap.timeline();
 
-          // Animate benefits with stagger
           const benefitsAnimation = staggerChildren(element, '.benefit-item', 1.1);
 
           return gsap.timeline()
@@ -499,7 +478,6 @@ export default function Home() {
           pinSpacing: true
         })}
         className="min-h-screen flex items-center justify-center py-24 px-6 bg-gradient-to-br from-neutral-950 via-neutral-900/50 to-neutral-950 relative overflow-hidden"
-        style={{ opacity: 1, transform: 'translateY(0)' }} // Fallback CSS
       >
         {/* Background decorations */}
         <div className="absolute inset-0">
@@ -681,19 +659,14 @@ export default function Home() {
       {/* My Products Section */}
       <section
         ref={useScrollTrigger((element) => {
-          // Set initial state
-          gsap.set(element, { opacity: 1, y: 0 });
-
           const cardElement = element.querySelector('.card-content');
           const titleElement = element.querySelector('h2');
           const descriptionElement = element.querySelector('p');
 
-          // Card reveal animation
           const cardAnimation = cardElement ? cardFlip(cardElement as HTMLElement, 0) : gsap.timeline();
           const titleAnimation = titleElement ? fadeInUp(titleElement, 0.3) : gsap.timeline();
           const descriptionAnimation = descriptionElement ? fadeInUp(descriptionElement, 0.5) : gsap.timeline();
 
-          // Animate product cards with stagger
           const cardsAnimation = staggerChildren(element, '.group', 0.7);
 
           return gsap.timeline()
@@ -710,7 +683,6 @@ export default function Home() {
         })}
         id="products"
         className="min-h-screen flex items-center justify-center py-24 px-6"
-        style={{ opacity: 1, transform: 'translateY(0)' }} // Fallback CSS
       >
         <div className="card-content w-full max-w-7xl mx-auto bg-gradient-to-br from-neutral-900/90 to-neutral-950/90 backdrop-blur-xl border border-neutral-800/50 rounded-3xl shadow-2xl shadow-cyan-500/20 p-12 md:p-16">
           <div className="text-center mb-20">
@@ -813,7 +785,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Testimonials Section */}
+      {/* Grafický Design Section */}
       <section
         ref={useScrollTrigger((element) => {
           // Set initial state
@@ -823,6 +795,42 @@ export default function Home() {
           const titleElement = element.querySelector('h2');
 
           // Card reveal animation
+          const cardAnimation = cardElement ? cardSlideIn(cardElement as HTMLElement, 'up', 0) : gsap.timeline();
+          const titleAnimation = titleElement ? fadeInUp(titleElement, 0.3) : gsap.timeline();
+
+          return gsap.timeline()
+            .add(cardAnimation)
+            .add(titleAnimation, '-=0.8');
+        }, {
+          pin: true,
+          start: 'top top',
+          end: '+=50%',
+          scrub: 1,
+          pinSpacing: true
+        })}
+        className="min-h-screen flex items-center justify-center py-20 px-6"
+      >
+        <div className="card-content w-full max-w-6xl mx-auto bg-gradient-to-br from-neutral-900/90 to-neutral-950/90 backdrop-blur-xl border border-neutral-800/50 rounded-3xl shadow-2xl shadow-pink-500/20 p-12 md:p-16">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-light mb-6 tracking-wide text-white leading-tight">
+              Grafický design
+            </h2>
+            <p className="text-lg md:text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
+              Naše kolekce grafických designů a kreativních řešení pro vaši značku
+            </p>
+          </div>
+          <div className="py-8">
+            <GrafickyDesignMarquee />
+          </div>
+        </div>
+      </section>
+
+      {/* Testimonials Section */}
+      <section
+        ref={useScrollTrigger((element) => {
+          const cardElement = element.querySelector('.card-content');
+          const titleElement = element.querySelector('h2');
+
           const cardAnimation = cardElement ? cardSlideIn(cardElement as HTMLElement, 'up', 0) : gsap.timeline();
           const titleAnimation = titleElement ? fadeInUp(titleElement, 0.3) : gsap.timeline();
 
@@ -851,19 +859,14 @@ export default function Home() {
       {/* Enhanced Tech Stack Section */}
       <section
         ref={useScrollTrigger((element) => {
-          // Set initial state
-          gsap.set(element, { opacity: 1, y: 0 });
-
           const cardElement = element.querySelector('.card-content');
           const titleElement = element.querySelector('h2');
           const descriptionElement = element.querySelector('p');
 
-          // Card reveal animation
           const cardAnimation = cardElement ? cardReveal(cardElement as HTMLElement, 0) : gsap.timeline();
           const titleAnimation = titleElement ? fadeInUp(titleElement, 0.3) : gsap.timeline();
           const descriptionAnimation = descriptionElement ? fadeInUp(descriptionElement, 0.5) : gsap.timeline();
 
-          // Animate tech cards with stagger
           const cardsAnimation = staggerChildren(element, '.group', 0.7);
 
           return gsap.timeline()
