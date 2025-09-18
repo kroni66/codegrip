@@ -4,6 +4,7 @@ import React, { useRef, useEffect, useMemo } from 'react';
 import { Canvas, useFrame, extend } from '@react-three/fiber';
 import { shaderMaterial } from '@react-three/drei';
 import * as THREE from 'three';
+import NextImage from 'next/image';
 
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
@@ -347,6 +348,20 @@ export default function Hero({
 
   return (
     <section className="relative h-screen w-screen overflow-hidden bg-black">
+      {/* Background Image */}
+      <div className="absolute inset-0 -z-10">
+        <NextImage
+          src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=1920&q=80"
+          alt="Hero background"
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover"
+        />
+        {/* Dark overlay for readability */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/40 to-black/20" />
+      </div>
+
       {/* Cursor Animation Background */}
       <SplashCursor containerRef={heroContentRef} />
 
@@ -399,7 +414,7 @@ export default function Hero({
       </div>
 
       {/* Bottom fade */}
-      <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-black/30 to-transparent" />
+      <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-black/70 via-black/40 to-transparent" />
     </section>
   );
 }

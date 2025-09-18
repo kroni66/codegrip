@@ -2,10 +2,12 @@ import React from 'react';
 import { cn } from '@/lib/utils';
 import { motion, useInView } from 'framer-motion';
 import { GlowingEffect } from './ui/glowing-effect';
+import { Palette, MonitorSmartphone, Printer, Megaphone } from 'lucide-react';
 
 interface CardContent {
   title: string;
   description: string;
+  icon?: React.ReactNode;
 }
 
 const CardBody = ({
@@ -35,6 +37,16 @@ const CardBody = ({
         className
       )}
     >
+      {/* Icon */}
+      {cardContent.icon && (
+        <div className="mb-5">
+          <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-gradient-to-br from-purple-500/20 to-blue-500/20 border border-white/10 ring-1 ring-white/10 shadow-lg">
+            <span className="text-white/90">
+              {cardContent.icon}
+            </span>
+          </div>
+        </div>
+      )}
       <motion.h3
         initial={{ opacity: 0, x: -30 }}
         whileInView={{ opacity: 1, x: 0 }}
@@ -187,18 +199,22 @@ export const CardWithLines = ({
 export const serviceCards = [
   {
     title: "Design značky",
-    description: "Kompletní design identity značky včetně loga, barevné palety, typografie a směrnic značky."
+    description: "Kompletní design identity značky včetně loga, barevné palety, typografie a směrnic značky.",
+    icon: <Palette size={28} strokeWidth={2} />
   },
   {
     title: "Webový design",
-    description: "Responzivní webový design s moderní estetikou a optimální uživatelskou zkušeností."
+    description: "Responzivní webový design s moderní estetikou a optimální uživatelskou zkušeností.",
+    icon: <MonitorSmartphone size={28} strokeWidth={2} />
   },
   {
     title: "Tiskový design",
-    description: "Poutavé tiskové materiály, které efektivně komunikují vaši zprávu."
+    description: "Poutavé tiskové materiály, které efektivně komunikují vaši zprávu.",
+    icon: <Printer size={28} strokeWidth={2} />
   },
   {
     title: "Digitální marketing",
-    description: "Grafika na sociální média a marketingové materiály, které zvyšují angažovanost."
+    description: "Grafika na sociální média a marketingové materiály, které zvyšují angažovanost.",
+    icon: <Megaphone size={28} strokeWidth={2} />
   }
 ];

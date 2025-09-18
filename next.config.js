@@ -1,6 +1,25 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Removed experimental appDir as it's the default in Next.js 14+
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'images.unsplash.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'encrypted-tbn0.gstatic.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'www.nicepng.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'wpmunk.com',
+      },
+    ],
+  },
 }
 
 module.exports = nextConfig

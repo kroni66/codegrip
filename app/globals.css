@@ -2,6 +2,30 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Partners marquee animation */
+@keyframes partners-marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.animate-partners-marquee {
+  animation: partners-marquee var(--speed, 35s) linear infinite;
+}
+
+/* Hero animations */
+@keyframes fade-in {
+  0% { opacity: 0; transform: translateY(20px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fade-up {
+  0% { opacity: 0; transform: translateY(40px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in { animation: fade-in 0.8s ease-out both; }
+.animate-fade-up { animation: fade-up 1s ease-out both; }
+
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -65,6 +89,8 @@
     --color-3: #87af4b;
     --color-4: #f7cbca;
     --color-5: #93a9d2;
+    --gradient-color: #8350e8;
+    --sparkles-color: #8350e8;
   }
 }
 
@@ -90,4 +116,37 @@
 .fade-in.visible {
   opacity: 1;
   transform: translateY(0);
+}
+
+/* Logotype styling */
+@layer utilities {
+  .logotype-shadow {
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+  }
+}
+
+/* Shine animation for AnimeNavBar */
+@keyframes shine {
+  0% {
+    transform: translateX(-100%);
+  }
+  50% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+/* Sparkles background variables */
+@layer base {
+  :root {
+    --gradient-color: #8350e8;
+    --sparkles-color: #8350e8;
+  }
+
+  .dark {
+    --gradient-color: #8350e8;
+    --sparkles-color: #ffffff;
+  }
 }

@@ -71,6 +71,7 @@ module.exports = {
   		animation: {
   			marquee: "marquee var(--duration) linear infinite",
   			"marquee-vertical": "marquee-vertical var(--duration) linear infinite",
+  			"pulse-slow": "pulse-slow 3s ease-in-out infinite",
   		},
   		keyframes: {
   			marquee: {
@@ -80,6 +81,10 @@ module.exports = {
   			"marquee-vertical": {
   				from: { transform: "translateY(0)" },
   				to: { transform: "translateY(calc(-100% - var(--gap)))" },
+  			},
+  			"pulse-slow": {
+  				'0%, 100%': { transform: 'translateX(-100%)' },
+  				'50%': { transform: 'translateX(100%)' },
   			},
   		}
   	}

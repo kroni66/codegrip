@@ -15,7 +15,7 @@ export default function CompassMenu() {
   };
 
   return (
-    <div className="fixed top-0 left-0 right-0 z-50 bg-neutral-950/95 backdrop-blur-sm border-b border-neutral-800">
+    <div className="fixed top-4 left-1/2 transform -translate-x-1/2 z-50 bg-black/20 backdrop-blur-lg border border-white/10 rounded-full min-w-[800px] max-w-7xl mx-auto px-6 shadow-2xl">
       <div className="max-w-7xl mx-auto px-6">
         <div className="flex items-center justify-between h-16">
           {/* Logo Section */}
@@ -26,7 +26,7 @@ export default function CompassMenu() {
               className="w-10 h-10 hover:scale-110 transition-transform duration-300"
             />
             <div className="hidden md:block">
-              <h1 className="text-xl font-bold tracking-wide text-white hover:text-custom-color-2 transition-colors duration-300">
+              <h1 className="text-lg font-black tracking-widest text-white logotype-shadow">
                 CODEGRIP
               </h1>
             </div>
