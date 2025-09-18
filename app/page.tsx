@@ -20,7 +20,8 @@ import { HeroSection } from './components/ui/hero-section';
 import HeroNew from './components/ui/heronew';
 import { TextScramble } from "@/components/ui/text-scramble"
 import Script from 'next/script'
-
+import { PartnersMarquee } from './components/PartnersMarquee'
+import { FeaturesSection } from './components/FeaturesSection'
 
 const navItems = [
   { name: 'Home', url: '#', icon: HomeIcon },
@@ -98,6 +99,30 @@ export default function Home() {
           microDetails={["React & Next.js", "Moderní design", "Rychlý vývoj"]}
         />
       </section>
+
+      {/* Features Section */}
+      <FeaturesSection
+        items={[
+          {
+            title: 'Rychlý a bezpečný hosting',
+            description:
+              'Nasazení na moderní cloudové infrastruktuře se špičkovým zabezpečením, SSL a automatickými aktualizacemi.',
+            lottieSrc: '/protection.json',
+          },
+          {
+            title: 'Design orientovaný na výkon',
+            description:
+              'Precizní UI/UX, optimalizované načítání a přístupnost. Pixel-perfect komponenty s Tailwind CSS.',
+            lottieSrc: '/Designer.json',
+          },
+          {
+            title: 'Škálovatelná architektura',
+            description:
+              'Modulární kód s využitím Next.js a Typescriptu. Připraveno na růst a integrace třetích stran.',
+            lottieSrc: '/Server.json',
+          },
+        ]}
+      />
 
       
 
@@ -927,6 +952,12 @@ export default function Home() {
         onAccept={acceptCookies}
         onReject={rejectCookies}
         onCustomSettings={updatePreferences}
+      />
+
+      {/* Lottie Web Component */}
+      <Script
+        src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"
+        strategy="afterInteractive"
       />
 
       {/* ElevenLabs Convai Widget */}
