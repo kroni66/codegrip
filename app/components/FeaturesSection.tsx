@@ -2,6 +2,8 @@
 
 import Image from "next/image"
 import React from "react"
+import gsap from 'gsap'
+import { useScrollTrigger, fadeInUp, staggerChildren } from '../hooks/useGSAPScrollTrigger'
 
 export type FeatureItem = {
   title: string
@@ -12,7 +14,23 @@ export type FeatureItem = {
 
 export function FeaturesSection({ items }: { items: FeatureItem[] }) {
   return (
-    <section className="py-20 px-6 bg-gradient-to-b from-[#0b0218] via-[#12032a] to-[#1a0838]">
+    <section
+      ref={useScrollTrigger((element) => {
+        const titleElement = element.querySelector('h2');
+        const descriptionElement = element.querySelector('p');
+
+        const titleAnimation = titleElement ? fadeInUp(titleElement, 0.3) : gsap.timeline();
+        const descriptionAnimation = descriptionElement ? fadeInUp(descriptionElement, 0.5) : gsap.timeline();
+
+        const featuresAnimation = staggerChildren(element, '.feature-item', 0.7);
+
+        return gsap.timeline()
+          .add(titleAnimation)
+          .add(descriptionAnimation, '-=0.8')
+          .add(featuresAnimation, '-=0.4');
+      })}
+      className="py-20 px-6 bg-gradient-to-b from-[#0b0218] via-[#12032a] to-[#1a0838]"
+    >
       <div className="max-w-7xl mx-auto">
         <header className="text-center mb-14">
           <h2 className="text-3xl md:text-5xl font-light tracking-tight text-white">Klíčové funkce</h2>
@@ -23,7 +41,7 @@ export function FeaturesSection({ items }: { items: FeatureItem[] }) {
           {items.map((item, idx) => {
             const isEven = idx % 2 === 0
             return (
-              <div key={idx} className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
+              <div key={idx} className="feature-item grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
                 {/* Text */}
                 <div className={`${isEven ? "order-2 lg:order-1" : "order-2"} text-left`}>
                   <h3 className="text-2xl md:text-3xl text-white font-light mb-4">{item.title}</h3>
