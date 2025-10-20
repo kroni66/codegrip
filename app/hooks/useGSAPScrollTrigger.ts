@@ -2,10 +2,11 @@
 import { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { ScrollToPlugin } from 'gsap/ScrollToPlugin';
 
-// Register ScrollTrigger plugin
+// Register ScrollTrigger and ScrollTo plugins
 if (typeof window !== 'undefined') {
-  gsap.registerPlugin(ScrollTrigger);
+  gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 }
 
 export interface ScrollAnimationOptions {
@@ -39,19 +40,29 @@ export const useScrollTrigger = (
     // Set initial state - hide elements before animation
     gsap.set(element, {
       opacity: 0,
-      y: options.start?.includes('top') ? 50 : 0
+      y: options.start?.includes('top') ? 50 : 30
     });
 
-    // Create ScrollTrigger with proper reverse handling
+    // Check if ScrollSmoother is available and get its scroller
+    let scroller: string | HTMLElement | Window = window;
+
+    // Try to get ScrollSmoother instance if available
+    const smoother = (window as any).ScrollSmoother?.get();
+    if (smoother) {
+      scroller = smoother.scroller || smoother.content || window;
+    }
+
+    // Create ScrollTrigger with ScrollSmoother integration
     const trigger = ScrollTrigger.create({
       trigger: options.trigger || element,
-      start: options.start || 'top 80%',
-      end: options.end || 'bottom 20%',
+      start: options.start || 'top 85%',
+      end: options.end || 'bottom 15%',
       scrub: options.scrub !== undefined ? options.scrub : false,
       pin: options.pin || false,
       pinSpacing: options.pinSpacing !== undefined ? options.pinSpacing : true,
       anticipatePin: options.anticipatePin || 0,
       markers: options.markers || false,
+      scroller: scroller, // Use ScrollSmoother's scroller if available
       onEnter: () => {
         // Play animation forward when entering
         gsap.to(element, {
@@ -66,7 +77,7 @@ export const useScrollTrigger = (
         // Hide when leaving (scrolling down past the section)
         gsap.to(element, {
           opacity: 0,
-          y: -50,
+          y: -30,
           duration: 0.5,
           ease: 'power2.out'
         });
@@ -86,7 +97,7 @@ export const useScrollTrigger = (
         // Hide when leaving upward (scrolling up past the section)
         gsap.to(element, {
           opacity: 0,
-          y: 50,
+          y: 30,
           duration: 0.5,
           ease: 'power2.out'
         });
@@ -98,7 +109,7 @@ export const useScrollTrigger = (
       if (trigger) {
         trigger.kill();
       }
-      if (tl) {
+      if (tl && typeof tl.kill === 'function') {
         tl.kill();
       }
     };
@@ -283,4 +294,232 @@ export const cardFlip = (element: HTMLElement, delay: number = 0) => {
       ease: 'power2.out'
     }
   );
+};
+
+// ScrollSmoother Hook
+export const useScrollSmoother = (
+  config: {
+    wrapper?: string;
+    content?: string;
+    smooth?: number;
+    normalizeScroll?: boolean;
+    ignoreMobileResize?: boolean;
+    effects?: boolean;
+    preventDefault?: boolean;
+    ease?: string;
+    onUpdate?: (self: any) => void;
+    onStop?: () => void;
+    onStart?: () => void;
+  } = {}
+) => {
+  const defaultConfig = {
+    wrapper: '#smooth-wrapper',
+    content: '#smooth-content',
+    smooth: 1,
+    normalizeScroll: true,
+    ignoreMobileResize: false,
+    effects: false,
+    preventDefault: true,
+    ease: 'power4.out',
+    ...config
+  };
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+
+    // Try to import ScrollSmoother (premium plugin)
+    const initScrollSmoother = async () => {
+      try {
+        // Dynamic import to handle potential module not found errors
+        const { ScrollSmoother } = await import('gsap/ScrollSmoother');
+
+        gsap.registerPlugin(ScrollSmoother);
+
+        const smoother = ScrollSmoother.create(defaultConfig);
+
+        return () => {
+          if (smoother) {
+            smoother.kill();
+          }
+        };
+      } catch (error) {
+        console.warn('ScrollSmoother is not available. Falling back to smooth scroll CSS.');
+
+        // Fallback: Add smooth scrolling CSS
+        const style = document.createElement('style');
+        style.textContent = `
+          html {
+            scroll-behavior: smooth;
+          }
+
+          * {
+            scroll-behavior: smooth;
+          }
+
+          /* Add momentum scrolling for mobile */
+          @media (max-width: 768px) {
+            html {
+              -webkit-overflow-scrolling: touch;
+            }
+          }
+        `;
+        document.head.appendChild(style);
+
+        return () => {
+          if (document.head.contains(style)) {
+            document.head.removeChild(style);
+          }
+        };
+      }
+    };
+
+    const cleanup = initScrollSmoother();
+
+    return () => {
+      cleanup?.then(clean => clean?.());
+    };
+  }, [defaultConfig]);
+
+  return defaultConfig;
+};
+
+// Alternative smooth scrolling hook for non-premium users
+export const useSmoothScroll = (config: { duration?: number; ease?: string } = {}) => {
+  const { duration = 1, ease = 'power2.out' } = config;
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+
+    // Enhanced smooth scrolling for elements with data-smooth-scroll
+    const handleSmoothScroll = (e: Event) => {
+      const target = e.target as HTMLElement;
+      const link = target.closest('a[href^="#"]') as HTMLAnchorElement;
+
+      if (link) {
+        e.preventDefault();
+        const targetId = link.getAttribute('href')?.slice(1);
+        const targetElement = targetId ? document.getElementById(targetId) : null;
+
+        if (targetElement) {
+          // Use ScrollSmoother if available, otherwise use GSAP scrollTo
+          const smoother = getScrollSmootherInstance();
+          if (smoother) {
+            // ScrollSmoother.scrollTo(target, duration, smooth, ease)
+            smoother.scrollTo(targetElement, duration, true, ease);
+          } else {
+            gsap.to(window, {
+              duration,
+              scrollTo: {
+                y: targetElement,
+                offsetY: 80
+              },
+              ease
+            });
+          }
+        }
+      }
+    };
+
+    // Add smooth scrolling to all anchor links
+    document.addEventListener('click', handleSmoothScroll);
+
+    // Add CSS smooth scrolling as fallback
+    const style = document.createElement('style');
+    style.textContent = `
+      html {
+        scroll-behavior: smooth;
+      }
+
+      /* Enhanced momentum scrolling */
+      body {
+        -webkit-overflow-scrolling: touch;
+      }
+
+      /* Smooth scroll for programmatic scrolls */
+      .smooth-scroll {
+        scroll-behavior: smooth;
+      }
+    `;
+    document.head.appendChild(style);
+
+    return () => {
+      document.removeEventListener('click', handleSmoothScroll);
+      if (document.head.contains(style)) {
+        document.head.removeChild(style);
+      }
+    };
+  }, [duration, ease]);
+};
+
+// ScrollSmoother Configuration Component
+export interface ScrollSmootherConfig {
+  smooth?: number;
+  normalizeScroll?: boolean;
+  ignoreMobileResize?: boolean;
+  effects?: boolean;
+  preventDefault?: boolean;
+  ease?: string;
+  onUpdate?: (self: any) => void;
+  onStop?: () => void;
+  onStart?: () => void;
+}
+
+export const createScrollSmootherConfig = (
+  customConfig: Partial<ScrollSmootherConfig> = {}
+): ScrollSmootherConfig => {
+  return {
+    smooth: 1.5,
+    normalizeScroll: true,
+    ignoreMobileResize: false,
+    effects: true,
+    preventDefault: true,
+    ease: 'power2.out',
+    onUpdate: (self) => {
+      // Default update handler - can be customized
+      // console.log('ScrollSmoother progress:', self.progress);
+    },
+    ...customConfig
+  };
+};
+
+// Utility function to check if ScrollSmoother is available
+export const isScrollSmootherAvailable = (): boolean => {
+  return typeof window !== 'undefined' && !!(window as any).ScrollSmoother;
+};
+
+// Utility function to get ScrollSmoother instance
+export const getScrollSmootherInstance = () => {
+  if (typeof window !== 'undefined') {
+    return (window as any).ScrollSmoother?.get?.();
+  }
+  return null;
+};
+
+// Enhanced scroll to function that works with ScrollSmoother
+export const smoothScrollTo = (
+  target: string | HTMLElement | number,
+  config: {
+    duration?: number;
+    ease?: string;
+    offsetY?: number;
+  } = {}
+) => {
+  const { duration = 1, ease = 'power2.out', offsetY = 0 } = config;
+
+  const smoother = getScrollSmootherInstance();
+  if (smoother) {
+    // Use ScrollSmoother's scrollTo method: scrollTo(target, duration, smooth, ease)
+    // Duration is in seconds, smooth is boolean, ease is string
+    smoother.scrollTo(target, duration, true, ease);
+  } else {
+    // Fallback to GSAP scrollTo
+    gsap.to(window, {
+      duration,
+      scrollTo: {
+        y: target,
+        offsetY
+      },
+      ease
+    });
+  }
 };

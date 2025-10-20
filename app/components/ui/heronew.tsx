@@ -3,6 +3,7 @@
 import NextImage from 'next/image'
 import React, { useEffect, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
+import Script from 'next/script'
 
 type CTA = {
   text: string
@@ -49,22 +50,47 @@ export default function HeroNew({
     return () => clearInterval(id)
   }, [rotatingWords])
   return (
-    <section className={`relative w-full overflow-hidden bg-gradient-to-b from-[#0b0218] via-[#12032a] to-[#1a0838] ${className ?? ''}`}>
-      {/* Grid Background (purple theme) */}
-      <div
-        className="absolute -z-10 inset-0 opacity-70 h-[700px] w-full 
-        bg-[linear-gradient(to_right,#2b0a4f_1px,transparent_1px),linear-gradient(to_bottom,#2b0a4f_1px,transparent_1px)]
-        bg-[size:6rem_5rem]
-        [mask-image:radial-gradient(ellipse_80%_50%_at_50%_0%,#000_70%,transparent_110%)]"
+    <>
+      {/* UnicornStudio Script */}
+      <Script
+        id="unicorn-studio-init"
+        strategy="afterInteractive"
+        dangerouslySetInnerHTML={{
+          __html: `
+            !function(){
+              if(!window.UnicornStudio){
+                window.UnicornStudio={isInitialized:!1};
+                var i=document.createElement("script");
+                i.src="https://cdn.jsdelivr.net/gh/hiunicornstudio/unicornstudio.js@v1.4.33/dist/unicornStudio.umd.js",
+                i.onload=function(){
+                  window.UnicornStudio.isInitialized||(UnicornStudio.init(),window.UnicornStudio.isInitialized=!0)
+                },
+                (document.head || document.body).appendChild(i)
+              }
+            }();
+          `
+        }}
       />
-      {/* Radial accent */}
-      <div
-        className="absolute left-1/2 top-[calc(100%-120px)] lg:top-[calc(100%-180px)]
-        h-[520px] w-[760px] md:h-[520px] md:w-[1100px] lg:h-[780px] lg:w-[140%]
-        -translate-x-1/2 rounded-[100%] border-[#B48CDE] bg-black
-        bg-[radial-gradient(closest-side,#0b0218_82%,#8b5cf6)] animate-fade-up"
-      />
-      <div className="mx-auto max-w-7xl px-6 pt-24 pb-20 md:pt-28 md:pb-24">
+      
+      <section className={`relative w-full overflow-hidden ${className ?? ''}`}>
+        {/* UnicornStudio Gradient Background */}
+        <div className="absolute inset-0 w-full h-full z-0 flex items-center justify-center overflow-hidden">
+          <div 
+            data-us-project="x4pTgiT0eJM26rH3qmo3" 
+            style={{ 
+              width: '100%', 
+              height: '100%',
+              minHeight: '100vh',
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              zIndex: 0
+            }}
+          />
+          {/* Subtle grey overlay */}
+          <div className="absolute inset-0 bg-gray-900/15 pointer-events-none z-[1]" />
+        </div>
+      <div className="relative z-10 mx-auto max-w-7xl px-6 pt-24 pb-20 md:pt-28 md:pb-24">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           {/* Image card (glassmorphism + smaller logo) */}
           <div className="order-2 lg:order-1 flex justify-center lg:justify-start">
@@ -179,6 +205,7 @@ export default function HeroNew({
           </div>
         </div>
       </div>
-    </section>
+      </section>
+    </>
   )
 }

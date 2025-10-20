@@ -5,13 +5,15 @@ import NextImage from 'next/image';
 import { AnimeNavBar } from '@/components/ui/anime-navbar';
 import { projects } from './data/projects';
 import { ProjectCard } from './components/ProjectCard';
-import { CardWithLines, CardBody, serviceCards } from './components/ServiceCard';
+import { CardWithLines, CardBody, ServiceCardStack, serviceCards } from './components/ServiceCard';
+import StackingCardAnimation from './components/StackingCardAnimation';
+import { ScrollInPlaceCards } from './components/ScrollInPlaceCards'
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { SiTypescript, SiWordpress, SiNextdotjs, SiVuedotjs } from 'react-icons/si';
 import { Home as HomeIcon, FileText, CreditCard, Info } from 'lucide-react';
 import { RotateWords } from './components/RotateWords';
-import { useScrollTrigger, fadeInUp, staggerChildren, scaleIn, cardReveal, cardSlideIn, cardBounce, cardFlip } from './hooks/useGSAPScrollTrigger';
+import { useScrollTrigger, fadeInUp, staggerChildren, scaleIn, cardReveal, cardSlideIn, cardBounce, cardFlip, useScrollSmoother, useSmoothScroll, createScrollSmootherConfig, smoothScrollTo } from './hooks/useGSAPScrollTrigger';
 import { Preloader } from './components/Preloader';
 import { TestimonialsMarquee } from './components/TestimonialsMarquee';
 import { GrafickyDesignMarquee } from './components/GrafickyDesign';
@@ -56,6 +58,42 @@ export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
   const { consent, acceptCookies, rejectCookies, updatePreferences } = useCookieConsent();
 
+  // Create ScrollSmoother configuration
+  const scrollSmootherConfig = createScrollSmootherConfig({
+    smooth: 1.5, // Adjust smoothness (higher = smoother but potentially less responsive)
+    normalizeScroll: true,
+    ignoreMobileResize: false,
+    effects: true, // Enable effects for enhanced scrolling
+    preventDefault: true,
+    ease: 'power2.out',
+    onUpdate: (self) => {
+      // Optional: Add custom logic when scroll updates
+      // Can be used for parallax effects, progress indicators, etc.
+      // console.log('ScrollSmoother progress:', self.progress);
+    },
+    onStart: () => {
+      // Optional: Called when smooth scrolling starts
+      // console.log('ScrollSmoother started');
+    },
+    onStop: () => {
+      // Optional: Called when smooth scrolling stops
+      // console.log('ScrollSmoother stopped');
+    }
+  });
+
+  // Initialize ScrollSmoother for smooth scrolling
+  const smootherInstance = useScrollSmoother({
+    wrapper: '#smooth-wrapper',
+    content: '#smooth-content',
+    ...scrollSmootherConfig
+  });
+
+  // Fallback smooth scrolling
+  useSmoothScroll({
+    duration: 1.2,
+    ease: 'power2.out'
+  });
+
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsLoading(false);
@@ -71,9 +109,11 @@ export default function Home() {
   return (
     <>
       <Preloader isLoading={isLoading} onLoadingComplete={handleLoadingComplete} />
-      <div className="min-h-screen bg-neutral-950 text-gray-100">
+      <div id="smooth-wrapper" className="min-h-screen bg-neutral-950 text-gray-100">
         {/* Navigation Menu - AnimeNavBar */}
         {!isLoading && <AnimeNavBar items={navItems} defaultActive="Home" />}
+
+        <div id="smooth-content">
 
       {/* Hero Section */}
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
@@ -100,7 +140,7 @@ export default function Home() {
         />
       </section>
 
-      {/* Features Section */}
+      {/* Klíčové funkce Section */}
       <FeaturesSection
         items={[
           {
@@ -123,8 +163,6 @@ export default function Home() {
           },
         ]}
       />
-
-      
 
       {/* Enhanced Projects Section */}
       <section
@@ -264,56 +302,22 @@ export default function Home() {
       {/* My Services Section */}
       <section
         ref={useScrollTrigger((element) => {
-          const cardElement = element.querySelector('.card-content');
           const titleElement = element.querySelector('h2');
           const descriptionElement = element.querySelector('p');
 
-          const cardAnimation = cardElement ? cardBounce(cardElement as HTMLElement, 0) : gsap.timeline();
           const titleAnimation = titleElement ? fadeInUp(titleElement, 0.3) : gsap.timeline();
           const descriptionAnimation = descriptionElement ? fadeInUp(descriptionElement, 0.5) : gsap.timeline();
 
-          const cardsAnimation = staggerChildren(element, 'article', 0.7);
-
           return gsap.timeline()
-            .add(cardAnimation)
-            .add(titleAnimation, '-=0.8')
-            .add(descriptionAnimation, '-=0.6')
-            .add(cardsAnimation, '-=0.4');
+            .add(titleAnimation)
+            .add(descriptionAnimation, '-=0.6');
         })}
-        className="min-h-screen flex items-center justify-center py-24 px-6"
+        className="py-24 px-6"
         aria-labelledby="services-heading"
       >
-        <div className="card-content relative w-full max-w-7xl mx-auto bg-gradient-to-br from-neutral-900/90 to-neutral-950/90 backdrop-blur-xl border border-neutral-800/50 rounded-3xl shadow-2xl shadow-purple-500/20 ring-1 ring-white/10 p-12 md:p-16">
-          <div className="pointer-events-none absolute inset-0 rounded-3xl bg-gradient-to-br from-purple-500/10 via-transparent to-blue-500/10" />
-          <header className="text-center mb-20">
-            <div id="services-heading">
-              <TextScramble
-                as="h2"
-                className="text-4xl md:text-5xl lg:text-6xl font-light mb-6 text-center tracking-wide text-white leading-tight"
-                duration={1.4}
-                speed={0.025}
-              >
-                Naše služby
-              </TextScramble>
-            </div>
-            <p className="text-lg md:text-xl text-zinc-400 max-w-3xl mx-auto leading-relaxed">
-              Profesionální designové služby pro vaši značku a digitální přítomnost
-            </p>
-          </header>
-
-          <div
-            className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-2 gap-6 md:gap-8 lg:gap-10"
-            role="list"
-            aria-label="Seznam služeb"
-          >
-            {serviceCards.map((card: { title: string; description: string }, index: number) => (
-              <article key={index} role="listitem" className="group">
-                <CardWithLines index={index}>
-                  <CardBody cardContent={card} />
-                </CardWithLines>
-              </article>
-            ))}
-          </div>
+        <div className="relative w-full max-w-7xl mx-auto">
+          {/* Scroll In Place Cards Animation Container */}
+          <ScrollInPlaceCards />
         </div>
       </section>
 
@@ -963,7 +967,8 @@ export default function Home() {
       {/* ElevenLabs Convai Widget */}
       <elevenlabs-convai agent-id="agent_7901k5ezk73efz5tc1mmamrb6b95"></elevenlabs-convai>
       <Script src="https://unpkg.com/@elevenlabs/convai-widget-embed" strategy="afterInteractive" async />
-    </div>
+        </div>
+      </div>
     </>
   );
 }

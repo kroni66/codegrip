@@ -88,7 +88,12 @@ export function AnimeNavBar({ items, className, defaultActive = "Home" }: NavBar
   const scrollToSection = (sectionId: string) => {
     if (sectionId === '#') {
       // Scroll to top for Home
-      window.scrollTo({ top: 0, behavior: 'smooth' })
+      const smoother = (window as any).ScrollSmoother?.get?.();
+      if (smoother) {
+        smoother.scrollTo(0, 1, true, 'power2.out');
+      } else {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
     } else {
       const element = document.querySelector(sectionId) as HTMLElement
       if (element) {
@@ -102,10 +107,16 @@ export function AnimeNavBar({ items, className, defaultActive = "Home" }: NavBar
         
         // Scroll to the element with proper offset
         const targetPosition = absoluteTop - navbarHeight
-        window.scrollTo({ 
-          top: Math.max(0, targetPosition), 
-          behavior: 'smooth' 
-        })
+        
+        const smoother = (window as any).ScrollSmoother?.get?.();
+        if (smoother) {
+          smoother.scrollTo(Math.max(0, targetPosition), 1, true, 'power2.out');
+        } else {
+          window.scrollTo({ 
+            top: Math.max(0, targetPosition), 
+            behavior: 'smooth' 
+          });
+        }
       }
     }
   }

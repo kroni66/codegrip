@@ -195,6 +195,52 @@ export const CardWithLines = ({
   );
 };
 
+// New component optimized for stacking animation
+export const ServiceCardStack = ({
+  children,
+  className = "",
+  index = 0
+}: {
+  children: React.ReactNode;
+  className?: string;
+  index?: number;
+}) => {
+  return (
+    <div
+      className={cn(
+        "group relative w-full rounded-xl overflow-hidden transform-gpu",
+        className
+      )}
+      style={{
+        transformStyle: 'preserve-3d',
+      }}
+    >
+      {/* Enhanced 3D border effect */}
+      <div className="relative p-[2px] rounded-xl overflow-hidden">
+        <div className="absolute inset-[-1000%] bg-[conic-gradient(from_90deg_at_50%_50%,#9B52D8_0%,#EC4899_25%,#3B82F6_50%,#10B981_75%,#9B52D8_100%)] animate-spin opacity-75"
+             style={{ animation: 'spin 8s linear infinite' }} />
+        <div className="relative bg-zinc-950 rounded-xl p-1 shadow-2xl shadow-purple-500/10">
+          <div className="size-full bg-[url(/svg/circle-ellipsis.svg)] bg-repeat bg-[length:32px_32px] relative rounded-xl overflow-hidden">
+            <div className="size-full bg-zinc-950">
+              <div className="relative z-10 size-full p-6 md:p-8">
+                <GlowingEffect
+                  spread={50}
+                  glow={true}
+                  disabled={false}
+                  proximity={100}
+                  inactiveZone={0.01}
+                  borderWidth={4}
+                />
+                {children}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 // Service card contents
 export const serviceCards = [
   {
