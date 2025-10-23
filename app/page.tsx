@@ -684,7 +684,9 @@ export default function Home() {
               <span className="relative z-10">Požádat o přístup</span>
             </a>
             <a 
-              href="#projects" 
+              href="https://silvusai.vercel.app/" 
+              target="_blank"
+              rel="noopener noreferrer"
               className="px-10 py-5 text-lg font-light tracking-wide rounded-full border-2 border-purple-500/50 text-purple-300 hover:bg-purple-500/20 hover:border-purple-400 transition-all duration-500 transform hover:scale-105 inline-flex items-center justify-center"
             >
               <span className="relative z-10">Zobrazit demo</span>
