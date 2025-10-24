@@ -323,6 +323,151 @@ export default function Home() {
         </div>
       </section>
 
+      {/* SILVUS AI Component Generator Section */}
+      <section
+        id="silvus-ai"
+        ref={useScrollTrigger((element) => {
+          const titleElement = element.querySelector('h2');
+          const descriptionElement = element.querySelector('p');
+          const imageElement = element.querySelector('.silvus-image');
+          const features = element.querySelectorAll('.feature-item');
+
+          const titleAnimation = titleElement ? fadeInUp(titleElement, 0) : gsap.timeline();
+          const descriptionAnimation = descriptionElement ? fadeInUp(descriptionElement, 0.2) : gsap.timeline();
+          const imageAnimation = imageElement ? scaleIn(imageElement as HTMLElement, 0.4) : gsap.timeline();
+
+          return gsap.timeline()
+            .add(titleAnimation)
+            .add(descriptionAnimation, '-=0.3')
+            .add(imageAnimation, '-=0.2')
+            .add(gsap.fromTo(features, {
+              opacity: 0,
+              y: 30
+            }, {
+              opacity: 1,
+              y: 0,
+              duration: 0.8,
+              stagger: 0.1,
+              ease: 'power2.out'
+            }), '-=0.2');
+        })}
+        className="relative min-h-screen flex items-center justify-center py-24 px-6 overflow-hidden"
+      >
+        {/* Animated Background - ASCII Dithered Effect */}
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_50%,rgba(120,62,193,0.15),transparent_50%),radial-gradient(circle_at_70%_50%,rgba(62,120,193,0.15),transparent_50%)] animate-pulse"></div>
+          <div className="absolute inset-0 opacity-5" style={{
+            backgroundImage: `url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Ctext x='5' y='25' fill='%23ffffff' font-family='monospace' font-size='20'%3E+%3C/text%3E%3C/svg%3E")`,
+            backgroundSize: '40px 40px'
+          }}></div>
+        </div>
+
+        <div className="max-w-7xl mx-auto relative z-10">
+          {/* Header */}
+          <div className="text-center mb-16">
+            <TextScramble
+              as="h2"
+              className="text-5xl md:text-6xl lg:text-7xl font-light mb-6 tracking-wide text-white leading-tight"
+              duration={1.2}
+              speed={0.025}
+            >
+              SILVUS AI
+            </TextScramble>
+            
+            <h3 className="text-3xl md:text-4xl text-white mb-6 font-light">
+              AI Generátor Komponent
+            </h3>
+
+            <p className="text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
+              Revolucionizujte váš pracovní postup s AI generováním komponent. Vytvářejte krásné, 
+              produkčně připravené React komponenty v sekundách pomocí přirozeného jazyka.
+            </p>
+          </div>
+
+          {/* Hero Shader Animation */}
+          <div className="relative silvus-image group mb-20">
+            <div className="relative rounded-3xl overflow-hidden shadow-2xl shadow-purple-500/40 ring-2 ring-purple-500/30 h-[600px] max-w-5xl mx-auto">
+              {/* YouTube Video Embed */}
+              <iframe
+                className="absolute inset-0 w-full h-full"
+                src="https://www.youtube.com/embed/NNy3lysr0Ok"
+                title="SILVUS AI Video"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              ></iframe>
+              
+              {/* Glowing border effect */}
+              <div className="absolute inset-0 rounded-3xl border-2 border-purple-500/0 group-hover:border-purple-500/60 transition-all duration-500 pointer-events-none"></div>
+            </div>
+
+            {/* Decorative elements */}
+            <div className="absolute -top-6 -right-6 w-40 h-40 bg-gradient-to-r from-purple-500/30 to-blue-500/30 rounded-full blur-3xl group-hover:scale-150 transition-transform duration-700"></div>
+            <div className="absolute -bottom-6 -left-6 w-48 h-48 bg-gradient-to-r from-blue-500/30 to-cyan-500/30 rounded-full blur-3xl group-hover:scale-150 transition-transform duration-700"></div>
+          </div>
+
+          {/* Features Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
+            <div className="feature-item group relative bg-gradient-to-br from-neutral-900/90 to-neutral-950/90 backdrop-blur-xl border border-neutral-800/50 rounded-2xl p-6 hover:border-purple-500/50 transition-all duration-300 hover:shadow-lg hover:shadow-purple-500/20">
+              <div className="w-12 h-12 bg-gradient-to-r from-purple-500 to-blue-600 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
+                <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                </svg>
+              </div>
+              <h4 className="text-white font-semibold mb-2 text-lg">Okamžité generování</h4>
+              <p className="text-gray-400 text-sm leading-relaxed">Generujte složité UI komponenty z jednoduchých textových popisů</p>
+            </div>
+            
+            <div className="feature-item group relative bg-gradient-to-br from-neutral-900/90 to-neutral-950/90 backdrop-blur-xl border border-neutral-800/50 rounded-2xl p-6 hover:border-purple-500/50 transition-all duration-300 hover:shadow-lg hover:shadow-purple-500/20">
+              <div className="w-12 h-12 bg-gradient-to-r from-purple-500 to-blue-600 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
+                <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z" />
+                </svg>
+              </div>
+              <h4 className="text-white font-semibold mb-2 text-lg">Historie verzí</h4>
+              <p className="text-gray-400 text-sm leading-relaxed">Sledujte a spravujte iterace komponent s integrovaným verzováním</p>
+            </div>
+            
+            <div className="feature-item group relative bg-gradient-to-br from-neutral-900/90 to-neutral-950/90 backdrop-blur-xl border border-neutral-800/50 rounded-2xl p-6 hover:border-purple-500/50 transition-all duration-300 hover:shadow-lg hover:shadow-purple-500/20">
+              <div className="w-12 h-12 bg-gradient-to-r from-purple-500 to-blue-600 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
+                <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
+                </svg>
+              </div>
+              <h4 className="text-white font-semibold mb-2 text-lg">Export na míru</h4>
+              <p className="text-gray-400 text-sm leading-relaxed">Export jedním kliknutím do React, Vue nebo jakéhokoliv frameworku</p>
+            </div>
+            
+            <div className="feature-item group relative bg-gradient-to-br from-neutral-900/90 to-neutral-950/90 backdrop-blur-xl border border-neutral-800/50 rounded-2xl p-6 hover:border-purple-500/50 transition-all duration-300 hover:shadow-lg hover:shadow-purple-500/20">
+              <div className="w-12 h-12 bg-gradient-to-r from-purple-500 to-blue-600 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
+                <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
+                </svg>
+              </div>
+              <h4 className="text-white font-semibold mb-2 text-lg">Přizpůsobitelný výstup</h4>
+              <p className="text-gray-400 text-sm leading-relaxed">Dolaďte každý aspekt pomocí chatu a regenerace v reálném čase</p>
+            </div>
+          </div>
+
+          {/* CTA Buttons */}
+          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+            <a 
+              href="#contact" 
+              className="hero-cta group px-10 py-5 text-lg font-light tracking-wide rounded-full border-2 text-white border-white hover:bg-white hover:text-black transition-all duration-500 transform hover:scale-105 bg-transparent inline-flex items-center justify-center shadow-lg hover:shadow-white/20"
+            >
+              <span className="relative z-10">Požádat o přístup</span>
+            </a>
+            <a 
+              href="https://silvusai.vercel.app/" 
+              target="_blank"
+              rel="noopener noreferrer"
+              className="px-10 py-5 text-lg font-light tracking-wide rounded-full border-2 border-purple-500/50 text-purple-300 hover:bg-purple-500/20 hover:border-purple-400 transition-all duration-500 transform hover:scale-105 inline-flex items-center justify-center"
+            >
+              <span className="relative z-10">Zobrazit demo</span>
+            </a>
+          </div>
+        </div>
+      </section>
+
       {/* Exclusive Promo Section */}
       <section
         ref={useScrollTrigger((element) => {
@@ -529,168 +674,6 @@ export default function Home() {
               {/* Background decoration */}
               <div className="absolute -inset-4 bg-gradient-to-r from-purple-500/20 to-pink-500/20 rounded-2xl blur-2xl -z-10"></div>
             </div>
-          </div>
-        </div>
-      </section>
-
-      {/* SILVUS AI Component Generator Section */}
-      <section
-        id="silvus-ai"
-        ref={useScrollTrigger((element) => {
-          const titleElement = element.querySelector('h2');
-          const descriptionElement = element.querySelector('p');
-          const imageElement = element.querySelector('.silvus-image');
-          const features = element.querySelectorAll('.feature-item');
-
-          const titleAnimation = titleElement ? fadeInUp(titleElement, 0) : gsap.timeline();
-          const descriptionAnimation = descriptionElement ? fadeInUp(descriptionElement, 0.2) : gsap.timeline();
-          const imageAnimation = imageElement ? scaleIn(imageElement as HTMLElement, 0.4) : gsap.timeline();
-
-          return gsap.timeline()
-            .add(titleAnimation)
-            .add(descriptionAnimation, '-=0.3')
-            .add(imageAnimation, '-=0.2')
-            .add(gsap.fromTo(features, {
-              opacity: 0,
-              y: 30
-            }, {
-              opacity: 1,
-              y: 0,
-              duration: 0.8,
-              stagger: 0.1,
-              ease: 'power2.out'
-            }), '-=0.2');
-        })}
-        className="relative min-h-screen flex items-center justify-center py-24 px-6 overflow-hidden"
-      >
-        {/* Animated Background - ASCII Dithered Effect */}
-        <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_50%,rgba(120,62,193,0.15),transparent_50%),radial-gradient(circle_at_70%_50%,rgba(62,120,193,0.15),transparent_50%)] animate-pulse"></div>
-          <div className="absolute inset-0 opacity-5" style={{
-            backgroundImage: `url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Ctext x='5' y='25' fill='%23ffffff' font-family='monospace' font-size='20'%3E+%3C/text%3E%3C/svg%3E")`,
-            backgroundSize: '40px 40px'
-          }}></div>
-        </div>
-
-        <div className="max-w-7xl mx-auto relative z-10">
-          {/* Header */}
-          <div className="text-center mb-16">
-            <TextScramble
-              as="h2"
-              className="text-5xl md:text-6xl lg:text-7xl font-light mb-6 tracking-wide text-white leading-tight"
-              duration={1.2}
-              speed={0.025}
-            >
-              SILVUS AI
-            </TextScramble>
-            
-            <h3 className="text-3xl md:text-4xl text-white mb-6 font-light">
-              AI Generátor Komponent
-            </h3>
-
-            <p className="text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
-              Revolucionizujte váš pracovní postup s AI generováním komponent. Vytvářejte krásné, 
-              produkčně připravené React komponenty v sekundách pomocí přirozeného jazyka.
-            </p>
-          </div>
-
-          {/* Hero Shader Animation */}
-          <div className="relative silvus-image group mb-20">
-            <div className="relative rounded-3xl overflow-hidden shadow-2xl shadow-purple-500/40 ring-2 ring-purple-500/30 h-[600px] max-w-5xl mx-auto">
-              <SilvusShaderBackground className="transition-transform duration-700 ease-out group-hover:scale-[1.02]" />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent pointer-events-none"></div>
-              
-              {/* Glowing border effect */}
-              <div className="absolute inset-0 rounded-3xl border-2 border-purple-500/0 group-hover:border-purple-500/60 transition-all duration-500"></div>
-              
-              {/* SILVUS Logo Overlay */}
-              <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                <div className="relative text-center px-10 py-8 rounded-3xl bg-black/50 backdrop-blur-lg border border-white/20 shadow-2xl">
-                  <div className="text-7xl md:text-8xl font-light text-white mb-4 tracking-wider drop-shadow-[0_4px_20px_rgba(0,0,0,1)]" style={{ textShadow: '0 0 40px rgba(139, 92, 246, 0.6), 0 0 80px rgba(139, 92, 246, 0.4)' }}>
-                    SILVUS
-                  </div>
-                  <div className="text-base md:text-lg text-white/95 tracking-widest uppercase font-medium drop-shadow-[0_2px_10px_rgba(0,0,0,0.9)] mb-6">
-                    Generujte React komponenty pomocí AI
-                  </div>
-                  
-                  {/* Compatible with icons at bottom */}
-                  <div className="flex items-center justify-end gap-3 pt-4 border-t border-white/10">
-                    <span className="text-xs text-white/60 uppercase tracking-wider">Kompatibilní s:</span>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" className="drop-shadow-[0_2px_10px_rgba(0,0,0,0.9)] opacity-70">
-                      <path fill="#ffffff" fillOpacity=".8" fillRule="evenodd" d="M14.615 1.595a.75.75 0 0 1 .359.852L12.982 9.75h7.268a.75.75 0 0 1 .548 1.262l-10.5 11.25a.75.75 0 0 1-1.272-.71l1.992-7.302H3.75a.75.75 0 0 1-.548-1.262l10.5-11.25a.75.75 0 0 1 .913-.143Z" clipRule="evenodd"/>
-                    </svg>
-                    <svg fill="#ffffff" width="20" height="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" className="drop-shadow-[0_2px_10px_rgba(0,0,0,0.9)] opacity-70">
-                      <path d="M4 0h16v8h-8zM4 8h8l8 8H4zM4 16h8v8z"/>
-                    </svg>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Decorative elements */}
-            <div className="absolute -top-6 -right-6 w-40 h-40 bg-gradient-to-r from-purple-500/30 to-blue-500/30 rounded-full blur-3xl group-hover:scale-150 transition-transform duration-700"></div>
-            <div className="absolute -bottom-6 -left-6 w-48 h-48 bg-gradient-to-r from-blue-500/30 to-cyan-500/30 rounded-full blur-3xl group-hover:scale-150 transition-transform duration-700"></div>
-          </div>
-
-          {/* Features Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
-            <div className="feature-item group relative bg-gradient-to-br from-neutral-900/90 to-neutral-950/90 backdrop-blur-xl border border-neutral-800/50 rounded-2xl p-6 hover:border-purple-500/50 transition-all duration-300 hover:shadow-lg hover:shadow-purple-500/20">
-              <div className="w-12 h-12 bg-gradient-to-r from-purple-500 to-blue-600 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
-                <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-                </svg>
-              </div>
-              <h4 className="text-white font-semibold mb-2 text-lg">Okamžité generování</h4>
-              <p className="text-gray-400 text-sm leading-relaxed">Generujte složité UI komponenty z jednoduchých textových popisů</p>
-            </div>
-            
-            <div className="feature-item group relative bg-gradient-to-br from-neutral-900/90 to-neutral-950/90 backdrop-blur-xl border border-neutral-800/50 rounded-2xl p-6 hover:border-purple-500/50 transition-all duration-300 hover:shadow-lg hover:shadow-purple-500/20">
-              <div className="w-12 h-12 bg-gradient-to-r from-purple-500 to-blue-600 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
-                <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z" />
-                </svg>
-              </div>
-              <h4 className="text-white font-semibold mb-2 text-lg">Historie verzí</h4>
-              <p className="text-gray-400 text-sm leading-relaxed">Sledujte a spravujte iterace komponent s integrovaným verzováním</p>
-            </div>
-            
-            <div className="feature-item group relative bg-gradient-to-br from-neutral-900/90 to-neutral-950/90 backdrop-blur-xl border border-neutral-800/50 rounded-2xl p-6 hover:border-purple-500/50 transition-all duration-300 hover:shadow-lg hover:shadow-purple-500/20">
-              <div className="w-12 h-12 bg-gradient-to-r from-purple-500 to-blue-600 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
-                <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
-                </svg>
-              </div>
-              <h4 className="text-white font-semibold mb-2 text-lg">Export na míru</h4>
-              <p className="text-gray-400 text-sm leading-relaxed">Export jedním kliknutím do React, Vue nebo jakéhokoliv frameworku</p>
-            </div>
-            
-            <div className="feature-item group relative bg-gradient-to-br from-neutral-900/90 to-neutral-950/90 backdrop-blur-xl border border-neutral-800/50 rounded-2xl p-6 hover:border-purple-500/50 transition-all duration-300 hover:shadow-lg hover:shadow-purple-500/20">
-              <div className="w-12 h-12 bg-gradient-to-r from-purple-500 to-blue-600 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
-                <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
-                </svg>
-              </div>
-              <h4 className="text-white font-semibold mb-2 text-lg">Přizpůsobitelný výstup</h4>
-              <p className="text-gray-400 text-sm leading-relaxed">Dolaďte každý aspekt pomocí chatu a regenerace v reálném čase</p>
-            </div>
-          </div>
-
-          {/* CTA Buttons */}
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-            <a 
-              href="#contact" 
-              className="hero-cta group px-10 py-5 text-lg font-light tracking-wide rounded-full border-2 text-white border-white hover:bg-white hover:text-black transition-all duration-500 transform hover:scale-105 bg-transparent inline-flex items-center justify-center shadow-lg hover:shadow-white/20"
-            >
-              <span className="relative z-10">Požádat o přístup</span>
-            </a>
-            <a 
-              href="https://silvusai.vercel.app/" 
-              target="_blank"
-              rel="noopener noreferrer"
-              className="px-10 py-5 text-lg font-light tracking-wide rounded-full border-2 border-purple-500/50 text-purple-300 hover:bg-purple-500/20 hover:border-purple-400 transition-all duration-500 transform hover:scale-105 inline-flex items-center justify-center"
-            >
-              <span className="relative z-10">Zobrazit demo</span>
-            </a>
           </div>
         </div>
       </section>
